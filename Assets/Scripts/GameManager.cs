@@ -58,9 +58,10 @@ public class GameManager : MonoBehaviour
     {
         // 타이머
         timer += Time.deltaTime;
+        time.text = $"{(int)timer/60:D2}:{(int)timer%60:D2}";
 
         level.text = $"Level : {playerLevel}";
-        time.text = $"{timer:N2}";
+        
 
         // 경험치, 경험치바
         if (exp >= expOfLevel[playerLevel])
@@ -71,5 +72,8 @@ public class GameManager : MonoBehaviour
 
         expBar.gameObject.GetComponent<Transform>().localScale = new Vector3(exp / expOfLevel[playerLevel], 1, 1);
 
+        // 레벨text
+
+        
     }
 }

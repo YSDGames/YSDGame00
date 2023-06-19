@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer > 0.02)
+        if (timer > 1)
         {
 
             Spawn();
