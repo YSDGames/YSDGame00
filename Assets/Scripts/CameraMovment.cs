@@ -29,13 +29,13 @@ public class CameraMovment : MonoBehaviour
         difY = transform.position.y - player.transform.position.y;
 
         // 왼쪽
-        if (difX > width / 2) transform.position = Vector3.Lerp(transform.position, new Vector3(player.transform.position.x - width / 2, transform.position.y, transform.position.z), 0.005f);
+        if (difX > width / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(player.transform.position.x - width / 3, transform.position.y, transform.position.z), 0.005f);
         // 오른쪽
-        if (difX < -width / 2) transform.position = Vector3.Lerp(transform.position, new Vector3(player.transform.position.x + width / 2, transform.position.y, transform.position.z), 0.005f);
+        if (difX < -width / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(player.transform.position.x + width / 3, transform.position.y, transform.position.z), 0.005f);
         // 아래방향
         if (difY > hight * 2 / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, player.transform.position.y + hight *2/ 3, transform.position.z),0.03f);
         // 위방향
-        if (difY < -hight /2) transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, player.transform.position.y - hight /2, transform.position.z), 0.03f);
+        if (difY < -hight /3) transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, player.transform.position.y - hight /3, transform.position.z), 0.03f);
 
 
         // transform.position = Vector3.Lerp(transform.position, player.transform.position, 0.05f);

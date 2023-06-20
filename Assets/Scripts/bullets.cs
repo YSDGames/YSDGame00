@@ -28,17 +28,24 @@ public class bullets : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("Boss"))
+        {
+            Destroy(gameObject);
+            collision.gameObject.GetComponent<Boss>().hp -= damage;
+        }
+
         if (collision.gameObject.CompareTag("enemy"))
         {
             Destroy(gameObject);
             collision.GetComponent<Enemy>().hp -= damage;
         }
 
-        else if (collision.gameObject.CompareTag("Boss"))
-        {
-            Destroy(gameObject);
-            collision.GetComponent<Boss>().hp -= damage;
-        }
+        
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
     }
 
     void DestroyBullet()

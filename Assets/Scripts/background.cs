@@ -7,7 +7,14 @@ public class background : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 3f;
 
-    // Update is called once per frame
+    float startPositionY;
+    [SerializeField] float endPositionY = 19f;
+    [SerializeField] float bossNum;
+
+    private void Awake()
+    {
+        startPositionY = transform.position.y;
+    }
     void Update()
     {
         switch (gameObject.transform.tag)
@@ -35,8 +42,8 @@ public class background : MonoBehaviour
 
 
             case "Boss":
-                //  도착위치-시작위치                  // 3분동안 위에까지 올라갈 수 있게.
-                transform.position += Vector3.up * Time.deltaTime * (19f - (-7f)) / ( 3 * 60 );
+                                                                     //  도착위치-시작위치          // bossNum*2분동안 위에까지 올라갈 수 있게.           
+                transform.position += Vector3.up * Time.deltaTime * (endPositionY - startPositionY) / (bossNum * 2 * 60);
 
 
                 break;

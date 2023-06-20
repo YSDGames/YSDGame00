@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exp: 1
   speed: 1
+  magRange: 1.5
 --- !u!212 &1464443793736710449
 SpriteRenderer:
   m_ObjectHideFlags: 0

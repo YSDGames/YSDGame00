@@ -13,6 +13,7 @@ public class ExpBall : MonoBehaviour
     void Update()
     {
         Move();
+        Destroy();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,6 +25,12 @@ public class ExpBall : MonoBehaviour
         }
     }
 
+    void Destroy()
+    {
+        if(transform.position.y < -6)
+            gameObject.SetActive(false);
+
+    }
     void Move()
     {
 

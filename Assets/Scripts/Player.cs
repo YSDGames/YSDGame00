@@ -5,12 +5,11 @@ using UnityEngine.XR;
 
 public class Player : MonoBehaviour
 {
-    public GameObject bullet0;
     public GameObject shootpoint;
     public static Player instance;
 
     public float maxHp = 10;
-    public float nowHp;
+    [HideInInspector]public float nowHp;
     public GameObject hpBar;
 
 

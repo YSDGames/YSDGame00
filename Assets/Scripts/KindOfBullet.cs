@@ -26,8 +26,6 @@ public class KindOfBullet : MonoBehaviour
     public GameObject Kind(int num)
     {
         return kindOfBullet[num];
-
-        
     }
 
 

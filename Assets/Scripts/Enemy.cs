@@ -6,7 +6,8 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : MonoBehaviour
 {
-    public float hp = 5f;
+    [SerializeField] float maxHp;
+    [HideInInspector] public float hp;
     public float damage = 1f;
     public float speed = 1f;
     float mainSpeed;
@@ -22,11 +23,12 @@ public class Enemy : MonoBehaviour
     public GameObject expball;
 
     Vector3 dirVec;
-
+    
 
     void Awake()
     {
         mainSpeed = speed;
+        
     }
 
 
@@ -38,6 +40,11 @@ public class Enemy : MonoBehaviour
         Reposition();
         Dead();
 
+    }
+
+    private void OnEnable()
+    {
+        hp = maxHp;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

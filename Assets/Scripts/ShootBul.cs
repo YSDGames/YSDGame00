@@ -9,11 +9,10 @@ public class ShootBul : MonoBehaviour
 
     public static ShootBul Instance = null;
     float timer = 0;
-    public enum Name
-    {
-        Lev1,
-        Lev2
-    }
+    int shootType = 0;
+
+
+    int bulltype = 0;
 
     private void Awake()
     {
@@ -24,46 +23,51 @@ public class ShootBul : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        
+        bulltype = (GameManager.instance.playerLevel - 1) / 2; //Player Level Start 1. bullNum Start 0.
+        Mathf.Clamp(bulltype, 0, 11);
+
+        shootType = (GameManager.instance.playerLevel) / 2;
+        Mathf.Clamp(shootType, 0, 5);
 
         if (timer > shootSpeed)
         {
-            switch (GameManager.instance.playerLevel)
-            {
-                case 1:
-                    Instantiate(KindOfBullet.instance.Kind((int)Name.Lev1), transform.position, Quaternion.identity);
-                    timer = 0;
-                    break;
-                case 2:
-                    Instantiate(KindOfBullet.instance.Kind((int)Name.Lev1), new Vector2(transform.position.x + 0.1f, transform.position.y), Quaternion.identity);
-                    Instantiate(KindOfBullet.instance.Kind((int)Name.Lev1), new Vector2(transform.position.x - 0.1f, transform.position.y), Quaternion.identity);
-                    timer = 0;
-                    break;
-                case 3:
-                    Instantiate(KindOfBullet.instance.Kind((int)Name.Lev1), new Vector2(transform.position.x + 0.15f, transform.position.y), Quaternion.identity);
-                    Instantiate(KindOfBullet.instance.Kind((int)Name.Lev1), new Vector2(transform.position.x - 0.15f, transform.position.y), Quaternion.identity);
-                    Instantiate(KindOfBullet.instance.Kind((int)Name.Lev1), new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
-                    timer = 0;
-                    break;
-                case 4:
-                    Instantiate(KindOfBullet.instance.Kind((int)Name.Lev2), transform.position, Quaternion.identity);
-                    timer = 0;
-                    break;
-                case 5:
-                    Instantiate(KindOfBullet.instance.Kind((int)Name.Lev2), new Vector2(transform.position.x + 0.1f, transform.position.y), Quaternion.identity);
-                    Instantiate(KindOfBullet.instance.Kind((int)Name.Lev2), new Vector2(transform.position.x - 0.1f, transform.position.y), Quaternion.identity);
-                    timer = 0;
-                    break;
-                default:
-                    Instantiate(KindOfBullet.instance.Kind((int)Name.Lev2), new Vector2(transform.position.x + 0.15f, transform.position.y), Quaternion.identity);
-                    Instantiate(KindOfBullet.instance.Kind((int)Name.Lev2), new Vector2(transform.position.x - 0.15f, transform.position.y), Quaternion.identity);
-                    Instantiate(KindOfBullet.instance.Kind((int)Name.Lev2), new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
-                    timer = 0;
-                    break;
-                
+            ShootType(shootType, bulltype);
+            timer = 0;
+
+        }
 
 
-            }
+    }
+
+    void ShootType(int shoottype, int bullet)
+    {
+        switch (shoottype)
+        {
+            case 0:
+                Instantiate(KindOfBullet.instance.Kind(bullet), transform.position, Quaternion.identity);
+                break;
+            case 1:
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x + 0.075f, transform.position.y), Quaternion.identity);
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x - 0.075f, transform.position.y), Quaternion.identity);
+                break;
+            case 2:
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x + 0.15f, transform.position.y), Quaternion.identity);
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x - 0.15f, transform.position.y), Quaternion.identity);
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+                break;
+            case 3:
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x + 0.075f, transform.position.y), Quaternion.identity);
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x - 0.075f, transform.position.y), Quaternion.identity);
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x + 0.15f, transform.position.y), Quaternion.identity);
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x - 0.15f, transform.position.y), Quaternion.identity);
+                break;
+            default:
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x + 0.3f, transform.position.y), Quaternion.identity);
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x - 0.3f, transform.position.y), Quaternion.identity);
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x + 0.15f, transform.position.y), Quaternion.identity);
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x - 0.15f, transform.position.y), Quaternion.identity);
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+                break;
         }
 
 

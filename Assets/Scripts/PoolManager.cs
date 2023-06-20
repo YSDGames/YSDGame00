@@ -29,11 +29,10 @@ public class PoolManager : MonoBehaviour
             if (!e.activeSelf)
             {
                 select = e;
+                e.gameObject.SetActive(true);
+                
 
-                for (int i = 0; i < pool.Length; i++)
-                {
-                    enemyList[i] = new List<GameObject>();
-                }
+                break;
 
             }
         }

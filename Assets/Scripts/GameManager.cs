@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public int playerLevel = 1;
 
     public float exp = 0;
-    int[] expOfLevel;
+    List<int> expOfLevel;
 
 
 
@@ -34,30 +34,34 @@ public class GameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
+        expOfLevel = new List<int>() 
+        { 
+            0,      //렙0
+            5,
+            5,
+            5,
+            5,
+            5,      //5
+            5,      
+            5,      
+            5,
+            5,
+            5,      //10
+            5,
+            5,
+            5,
+            5,
+            5,      //15
+            5,      
+            5,
 
-        expOfLevel = new int[9];
-
-        expOfLevel[0] = 0;
-        expOfLevel[1] = 5;
-        expOfLevel[2] = 10;
-        expOfLevel[3] = 20;
-        expOfLevel[4] = 25;
-        expOfLevel[5] = 30;
-        expOfLevel[6] = 35;
-        expOfLevel[7] = 50;
-        expOfLevel[8] = 60;
+        };
 
     }
-
-    void Start()
-    {
-
-    }
-
-
+    
     void Update()
     {
-        // 타이머
+        // 타이머, 레벨
         timer += Time.deltaTime;
         time.text = $"{(int)timer/60:D2}:{(int)timer%60:D2}";
 
@@ -65,17 +69,21 @@ public class GameManager : MonoBehaviour
         
 
         // 경험치, 경험치바
-        if (exp >= expOfLevel[playerLevel])
+        if (exp >= expOfLevel[playerLevel])             
         {
             exp -= expOfLevel[playerLevel];
             playerLevel += 1;
         }
 
-        expBar.gameObject.GetComponent<Transform>().localScale = new Vector3(exp / expOfLevel[playerLevel], 1, 1);
+        if (playerLevel == expOfLevel.Count)
+        {
+            playerLevel -= 1;
+        }
 
-        // 레벨text
-
-        
+        if(playerLevel == expOfLevel.Count-1)
+            expBar.gameObject.GetComponent<Transform>().localScale = new Vector3(0, 1, 1);
+        else
+          expBar.gameObject.GetComponent<Transform>().localScale = new Vector3(exp / expOfLevel[playerLevel], 1, 1);
     }
 
     public float GetTime()
