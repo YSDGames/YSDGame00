@@ -10,25 +10,33 @@ public class Enemy : MonoBehaviour
     public float hp = 5f;
     public float damage = 1f;
     public float speed = 1f;
+    float mainSpeed;
+
+
     public float exp = 1f;
+
+
 
     public GameObject expball;
 
     Vector3 dirVec;
 
 
-    void Start()
+    void Awake()
     {
         player = GameObject.Find("Player");
+        mainSpeed = speed;
     }
 
-    
+
     void Update()
     {
 
         LookPlayer();
         GoToPlayer();
+        Reposition();
         Dead();
+
     }
     void LookPlayer()
     {
@@ -42,8 +50,8 @@ public class Enemy : MonoBehaviour
 
     void GoToPlayer()
     {
-        
-        if ((transform.position.y - player.transform.position.y) > 1f )
+
+        if ((transform.position.y - player.transform.position.y) > 1f)
         {
             dirVec = Vector3.Normalize(player.transform.position - transform.position);
 
@@ -52,8 +60,22 @@ public class Enemy : MonoBehaviour
         else
         {
             transform.position += dirVec * Time.deltaTime * speed;
-            
+
         }
+
+        float distanceFroemCameraX = Mathf.Abs(transform.position.x - GameManager.instance.mainCamera.transform.position.x);
+        float distanceFroemCameraY = Mathf.Abs(transform.position.y - GameManager.instance.mainCamera.transform.position.y);
+
+
+        if (distanceFroemCameraX > 4 || distanceFroemCameraY > 6)
+        {
+            speed = 5 * mainSpeed;
+        }
+        else
+        {
+            speed = mainSpeed;
+        }
+
     }
 
     void Dead()
@@ -66,4 +88,18 @@ public class Enemy : MonoBehaviour
 
         }
     }
+
+    void Reposition()
+    {
+        if (transform.position.y < -6)
+        {
+            transform.position = new Vector3(-transform.position.x, 15f, transform.position.z);
+        }
+
+        if (Mathf.Abs(transform.position.x) > 25)
+        {
+            transform.position = new Vector3(0f, 15f, transform.position.z);
+        }
+    }
+
 }

@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     public EnemyPool pool;
     public spaceship player;
+    public GameObject mainCamera;
 
     public int playerLevel = 1;
 

@@ -7,11 +7,12 @@ public class ExpBall : MonoBehaviour
     public float exp = 1f;
     public float speed = 1f;
 
+    public float magRange = 1f;
+    bool isEnter = false;
 
-    
     void Update()
     {
-        transform.position += Vector3.down * Time.deltaTime * speed;
+        Move();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -21,5 +22,30 @@ public class ExpBall : MonoBehaviour
             Destroy(gameObject);
             GameManager.instance.exp += exp;
         }
+    }
+
+    void Move()
+    {
+
+        Magnetic();
+
+        if (!isEnter)
+            transform.position += Vector3.down * Time.deltaTime * speed;
+
+    }
+
+    void Magnetic()
+    {
+        Vector3 dir = GameManager.instance.player.transform.position - transform.position;
+        float distance = dir.magnitude;
+
+        if (distance < magRange)
+        {
+            transform.position += dir.normalized * Time.deltaTime * 5f;
+
+            isEnter = true;
+        }
+        else
+            isEnter = false;
     }
 }
