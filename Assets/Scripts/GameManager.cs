@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance = null;
 
-    public EnemyPool pool;
-    public spaceship player;
+    public PoolManager pool;
+    public Player player;
     public GameObject mainCamera;
 
     public int playerLevel = 1;
@@ -76,5 +76,10 @@ public class GameManager : MonoBehaviour
         // ·¹º§text
 
         
+    }
+
+    public float GetTime()
+    {
+        return timer;
     }
 }

@@ -33,6 +33,12 @@ public class bullets : MonoBehaviour
             Destroy(gameObject);
             collision.GetComponent<Enemy>().hp -= damage;
         }
+
+        else if (collision.gameObject.CompareTag("Boss"))
+        {
+            Destroy(gameObject);
+            collision.GetComponent<Boss>().hp -= damage;
+        }
     }
 
     void DestroyBullet()

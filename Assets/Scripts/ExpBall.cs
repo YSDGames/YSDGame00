@@ -19,7 +19,7 @@ public class ExpBall : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
             GameManager.instance.exp += exp;
         }
     }

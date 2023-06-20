@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,15 +6,16 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] GameObject player;
-
     public float hp = 5f;
     public float damage = 1f;
     public float speed = 1f;
     float mainSpeed;
 
-
     public float exp = 1f;
+
+
+    float damageInterval = 1f;
+    float timer = 0;
 
 
 
@@ -24,7 +26,6 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
-        player = GameObject.Find("Player");
         mainSpeed = speed;
     }
 
@@ -38,9 +39,37 @@ public class Enemy : MonoBehaviour
         Dead();
 
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        timer = 0;
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            GameManager.instance.player.nowHp -= damage;
+
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        timer += Time.deltaTime;
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (timer > damageInterval)
+            {
+                GameManager.instance.player.nowHp -= damage;
+                timer = 0;
+            }
+        }
+    }
+
+
+
     void LookPlayer()
     {
-        Vector2 direction = (player.transform.position - transform.position).normalized;
+        Vector2 direction = (GameManager.instance.player.gameObject.transform.position - transform.position).normalized;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion q = Quaternion.AngleAxis(angle + 270, Vector3.forward);
@@ -51,9 +80,9 @@ public class Enemy : MonoBehaviour
     void GoToPlayer()
     {
 
-        if ((transform.position.y - player.transform.position.y) > 1f)
+        if ((transform.position.y - GameManager.instance.player.gameObject.transform.position.y) > 1f)
         {
-            dirVec = Vector3.Normalize(player.transform.position - transform.position);
+            dirVec = Vector3.Normalize(GameManager.instance.player.gameObject.transform.position - transform.position);
 
             transform.position += dirVec * Time.deltaTime * speed;
         }
@@ -63,11 +92,12 @@ public class Enemy : MonoBehaviour
 
         }
 
+        //카메라 밖에 있을때 빠르게 움직이게
         float distanceFroemCameraX = Mathf.Abs(transform.position.x - GameManager.instance.mainCamera.transform.position.x);
         float distanceFroemCameraY = Mathf.Abs(transform.position.y - GameManager.instance.mainCamera.transform.position.y);
 
 
-        if (distanceFroemCameraX > 4 || distanceFroemCameraY > 6)
+        if (distanceFroemCameraX > 6 || distanceFroemCameraY > 8)
         {
             speed = 5 * mainSpeed;
         }
@@ -82,8 +112,11 @@ public class Enemy : MonoBehaviour
     {
         if (hp <= 0)
         {
-            Instantiate(expball, transform.position, Quaternion.identity);
-
+            // 경험치볼 생성.
+            GameObject expObj = GameManager.instance.pool.GetPool(0);
+            expObj.gameObject.transform.position = transform.position;
+            expObj.gameObject.GetComponent<ExpBall>().exp = this.exp;
+            
             gameObject.SetActive(false);
 
         }
