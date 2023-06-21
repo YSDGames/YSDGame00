@@ -23,17 +23,26 @@ public class ShootBul : MonoBehaviour
     {
         timer += Time.deltaTime;
 
+        //레벨에 따라 총알 종류, 쏘는 타입 결정.
         bulltype = (GameManager.instance.playerLevel - 1) / 2; //Player Level Start 1. bullNum Start 0.
         Mathf.Clamp(bulltype, 0, 11);
 
         shootType = (GameManager.instance.playerLevel) / 2;
         Mathf.Clamp(shootType, 0, 5);
 
+        //레벨에따른 shotspeed
+        if (GameManager.instance.playerLevel == 5)
+            shootSpeed = 0.3f;
+        if (GameManager.instance.playerLevel == 10)
+            shootSpeed = 0.25f;
+        if (GameManager.instance.playerLevel == 15)
+            shootSpeed = 0.2f;
+
+
         if (timer > shootSpeed)
         {
             ShootType(shootType, bulltype);
             timer = 0;
-
         }
 
 
@@ -58,8 +67,8 @@ public class ShootBul : MonoBehaviour
             case 3:
                 Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x + 0.075f, transform.position.y), Quaternion.identity);
                 Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x - 0.075f, transform.position.y), Quaternion.identity);
-                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x + 0.15f, transform.position.y), Quaternion.identity);
-                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x - 0.15f, transform.position.y), Quaternion.identity);
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x + 0.225f, transform.position.y), Quaternion.identity);
+                Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x - 0.225f, transform.position.y), Quaternion.identity);
                 break;
             default:
                 Instantiate(KindOfBullet.instance.Kind(bullet), new Vector2(transform.position.x + 0.3f, transform.position.y), Quaternion.identity);

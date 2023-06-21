@@ -50,7 +50,8 @@ public class bullets : MonoBehaviour
 
     void DestroyBullet()
     {
-        if (transform.position.y > 20)
+        //카메라밖으로 나가면 총알삭제
+        if (transform.position.y > GameManager.instance.mainCamera.transform.position.y + Camera.main.orthographicSize + 1)
         {
             Destroy(gameObject);
         }

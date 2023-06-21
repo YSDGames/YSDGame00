@@ -12,7 +12,7 @@ public class KindOfBullet : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        DontDestroyOnLoad(gameObject);
+        
 
         foreach (var item in kindOfBullet)
         {

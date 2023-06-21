@@ -14,13 +14,8 @@ public class Enemy : MonoBehaviour
 
     public float exp = 1f;
 
-
     float damageInterval = 1f;
     float timer = 0;
-
-
-
-    public GameObject expball;
 
     Vector3 dirVec;
     

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExpBall : MonoBehaviour
 {
-    public float exp = 1f;
+    public float exp;
     public float speed = 1f;
 
     public float magRange = 1f;

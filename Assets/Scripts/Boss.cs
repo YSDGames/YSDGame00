@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
+    
+
     public float hp = 100;
     [SerializeField] float damage = 5;
     [SerializeField] float speed = 1f;
@@ -61,15 +63,22 @@ public class Boss : MonoBehaviour
     }
     void Dead()
     {
+        if (gameObject.name == "Boss4")
+        {
+            gameObject.SetActive(false);
+            GameManager.instance.GameClear();
+        }
+
         if (hp <= 0)
         {
             // 경험치볼 생성.
-            GameObject expObj = GameManager.instance.pool.GetPool(0);
+            GameObject expObj = GameManager.instance.pool.GetPool(1);
             expObj.gameObject.transform.position = transform.position;
             expObj.gameObject.GetComponent<ExpBall>().exp = this.exp;
 
             gameObject.SetActive(false);
-
         }
+
+        
     }
 }

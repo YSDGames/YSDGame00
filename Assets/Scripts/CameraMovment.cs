@@ -18,6 +18,8 @@ public class CameraMovment : MonoBehaviour
     {
         mapX = 15.3f;
         mapY = 15f;
+
+                //카메라 높이의 1/2
         hight = Camera.main.orthographicSize;
         width = hight * Screen.width / Screen.height;
     }

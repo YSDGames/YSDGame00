@@ -41,7 +41,7 @@ public class background : MonoBehaviour
                 break;
 
 
-            case "Boss":
+            case "BGBoss":
                                                                      //  도착위치-시작위치          // bossNum*2분동안 위에까지 올라갈 수 있게.           
                 transform.position += Vector3.up * Time.deltaTime * (endPositionY - startPositionY) / (bossNum * 2 * 60);
 

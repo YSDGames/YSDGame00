@@ -9,6 +9,7 @@ TagManager:
   - BackGround
   - Object
   - Boss
+  - BGBoss
   layers:
   - Default
   - TransparentFX

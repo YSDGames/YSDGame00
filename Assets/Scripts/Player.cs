@@ -7,14 +7,11 @@ public class Player : MonoBehaviour
 {
     public GameObject shootpoint;
     public static Player instance;
-
-    public float maxHp = 10;
-    [HideInInspector]public float nowHp;
     public GameObject hpBar;
 
-
-    [SerializeField]
-    private float _speed = 1.0f;
+    public float maxHp = 10;
+    [HideInInspector] public float nowHp;
+    [SerializeField] private float _speed = 1.0f;
 
     float mapMaxY = 15f;
     float mapMinY = -4.6f;
@@ -34,14 +31,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
 
         Move();
         HpUpdate();
         Dead();
 
     }
-    
+
     void HpUpdate()
     {
         hpBar.gameObject.GetComponent<Transform>().localScale = new Vector3(Mathf.Clamp(nowHp / maxHp, 0, 1), 1, 1);
@@ -51,7 +48,8 @@ public class Player : MonoBehaviour
     {
         if (nowHp <= 0)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            GameManager.instance.GameOver();
         }
     }
 
