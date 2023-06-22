@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject dieUI;
     public GameObject clearUI;
 
-
+    public Vector3 bossPosition;
     public int playerLevel = 1;
     public float exp = 0;
     float timer = 0;
@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        
         // 타이머, 레벨s
         timer += Time.deltaTime;
         time.text = $"{(int)(endTime-timer) / 60:D2}:{(int)(endTime - timer) % 60:D2}";
@@ -75,6 +76,7 @@ public class GameManager : MonoBehaviour
         }
 
         LevelUp();
+        GetBossDir();
     }
    
     void LevelUp()
@@ -115,6 +117,39 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         dieUI.SetActive(true);
-
+        
     }
+
+    void GetBossDir()
+    {
+        //보스가 존재할때만 킴.
+        if (GameObject.FindWithTag("Boss")==null)
+        {
+            BossDirc.instance.gameObject.SetActive(false);
+        }
+        
+        
+        else
+        {
+            //카메라안에오면 끔.
+            bossPosition = GameObject.FindWithTag("Boss").transform.position;
+            Vector3 CameraCheckBoss = bossPosition - mainCamera.transform.position;
+
+            if (CameraCheckBoss.x < BossDirc.instance.staticMaxX + 4 && CameraCheckBoss.x > BossDirc.instance.staticMinX - 4 && CameraCheckBoss.y < BossDirc.instance.staticMaxY + 4 && CameraCheckBoss.y > BossDirc.instance.staticMinY - 4)
+            {
+                BossDirc.instance.gameObject.SetActive(false);
+
+            }
+            else
+            {
+
+                BossDirc.instance.gameObject.SetActive(true);
+
+            }
+        }
+
+    
+            
+    }
+
 }
