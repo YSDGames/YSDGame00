@@ -10,6 +10,8 @@ TagManager:
   - Object
   - Boss
   - BGBoss
+  - ChangeBall
+  - Bullet
   layers:
   - Default
   - TransparentFX
