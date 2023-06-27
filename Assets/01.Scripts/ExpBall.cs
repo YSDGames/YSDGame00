@@ -12,18 +12,18 @@ public class ExpBall : MonoBehaviour
     public float magRange = 1f;
     bool isEnter = false;
 
-    private void Start()
-    {
-        if (exp == 1 || exp == 5) size = 0.1f;
-        else if (exp >= 50) size = 1f;
-        else size = 0.2f;
-
-        transform.localScale = new Vector3(size, size, size);
-    }
- 
-    
     void Update()
     {
+        if (exp == 1) size = 0.1f;
+        else if (exp <= 2) size = 0.2f;
+        else if (exp <= 3) size = 0.25f;
+        else if (exp <= 5) size = 0.4f;
+        else if (exp <= 10) size = 0.45f;
+        else if (exp <= 49) size = 0.55f;
+        else if (exp >= 50) size = 2f;
+        transform.localScale = new Vector3(size, size, size);
+        
+
         Move();
         Destroy();
     }
@@ -38,14 +38,7 @@ public class ExpBall : MonoBehaviour
             GameManager.instance.exp += exp;
         }
     }
-    private void OnEnable()
-    {
-        if (exp == 1 || exp == 5) size = 0.1f;
-        else if (exp >= 50) size = 1f;
-        else size = 0.2f;
-
-        transform.localScale = new Vector3(size, size, size);
-    }
+    
 
     void Move()
     {

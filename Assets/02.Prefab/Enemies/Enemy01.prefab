@@ -51,7 +51,6 @@ MonoBehaviour:
   maxHp: 10
   hp: 0
   enemyDieSound: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
-  dieAni: {fileID: 0}
   damage: 1
   speed: 0.5
   exp: 2
@@ -97,7 +96,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.9306473, g: 0.9622642, b: 0.51290494, a: 1}
+  m_Color: {r: 1, g: 0.50412667, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -166,7 +165,7 @@ Animator:
   m_GameObject: {fileID: 7714469895278950857}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f53c00d3b93110045a3619cfbf646539, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossDieSound: {fileID: 8300000, guid: b9eff218e132a4e76be78840eca96fb2, type: 3}
-  hp: 800
+  hp: 2000
   damage: 10
   speed: 0.5
   exp: 100
@@ -117,9 +117,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.07395935, y: 0}
   serializedVersion: 2
-  m_Radius: 10.24
+  m_Radius: 10.018129
 --- !u!50 &8067397021266231933
 Rigidbody2D:
   serializedVersion: 4

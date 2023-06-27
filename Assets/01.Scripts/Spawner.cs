@@ -42,6 +42,9 @@ public class Spawner : MonoBehaviour
             if (timer > 1f)
             {
                 Spawn(7, "all");
+                Spawn(3, "left");
+                Spawn(3, "left");
+
                 timer = 0;
             }
         }
@@ -52,6 +55,8 @@ public class Spawner : MonoBehaviour
                 Spawn(7, "center");
                 Spawn(6, "right");
                 Spawn(6, "left");
+                Spawn(3, "left");
+                Spawn(3, "left");
                 timer = 0;
             }
         }
@@ -62,6 +67,9 @@ public class Spawner : MonoBehaviour
                 Spawn(6, "center");
                 Spawn(5, "right");
                 Spawn(5, "left");
+                Spawn(3, "left");
+
+
                 timer = 0;
             }
         }
@@ -100,6 +108,7 @@ public class Spawner : MonoBehaviour
             if (timer > 1f)
             {
                 Spawn(4, "all");
+                Spawn(2, "center");
 
                 timer = 0;
             }

@@ -18,29 +18,33 @@ public class GameManager : MonoBehaviour
     public GameObject clearUI;
 
     public Vector3 bossPosition;
-    public int playerLevel = 1;
-    public float exp = 0;
-    float timer = 0;
+    public int playerLevel;
+    public float exp;
+    float timer ;
     float endTime = 12 * 60;
-    public int shootType=0;
+    public int shootType;
     List<int> expOfLevel;
 
     [SerializeField] Text time;
     [SerializeField] Text level;
 
+    void Init()
+    {
+        playerLevel = 1;
+        timer = 0;
+        exp = 0;
+        shootType = 0;
+    }
     private void Awake()
     {
         if(instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
-
-
 
         expOfLevel = new List<int>()
         {
@@ -67,6 +71,11 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        Init();
+    }
+
     void Update()
     {
         
@@ -80,10 +89,8 @@ public class GameManager : MonoBehaviour
         if (timer <= 0)
         {
             timer = 0;
-
             GameOver();
         }
-
         LevelUp();
         GetBossDir();
     }
@@ -95,6 +102,7 @@ public class GameManager : MonoBehaviour
         {
             exp -= expOfLevel[playerLevel];
             playerLevel += 1;
+            player.nowHp += 1;
         }
 
         //최대레벨 초과시 레벨 그대로.
@@ -118,7 +126,6 @@ public class GameManager : MonoBehaviour
     public void GameClear()
     {
         Time.timeScale = 0;
-
         clearUI.SetActive(true);
     }
 
@@ -126,7 +133,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         dieUI.SetActive(true);
-        
     }
 
     void GetBossDir()
@@ -136,8 +142,6 @@ public class GameManager : MonoBehaviour
         {
             BossDirc.instance.gameObject.SetActive(false);
         }
-        
-        
         else
         {
             //카메라안에오면 끔.
@@ -147,18 +151,12 @@ public class GameManager : MonoBehaviour
             if (CameraCheckBoss.x < BossDirc.instance.staticMaxX + 4 && CameraCheckBoss.x > BossDirc.instance.staticMinX - 4 && CameraCheckBoss.y < BossDirc.instance.staticMaxY + 4 && CameraCheckBoss.y > BossDirc.instance.staticMinY - 4)
             {
                 BossDirc.instance.gameObject.SetActive(false);
-
             }
             else
             {
-
                 BossDirc.instance.gameObject.SetActive(true);
-
             }
         }
-
-    
-            
     }
 
 }
