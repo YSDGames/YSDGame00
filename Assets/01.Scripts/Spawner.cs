@@ -184,7 +184,7 @@ public class Spawner : MonoBehaviour
             if (GameManager.instance.GetTime() / (2 * 60) >= bossNum + 1)
             {
                 GameObject boss = Instantiate(Bosses[bossNum++]);
-                boss.gameObject.transform.position = new Vector3(0, 18, 0);
+                boss.gameObject.transform.position = new Vector3(0, 25, 0);
 
             }
         }

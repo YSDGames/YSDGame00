@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossDieSound: {fileID: 8300000, guid: b9eff218e132a4e76be78840eca96fb2, type: 3}
-  hp: 8000
+  hp: 10000
   damage: 10
   speed: 0.5
   exp: 200

@@ -61,7 +61,7 @@ public class Boss : MonoBehaviour
     {
         if (transform.position.y > 10)
         {
-            transform.position += Vector3.down * Time.deltaTime * speed;
+            transform.position += Vector3.down * Time.deltaTime * speed*2f;
         }
         else
         {

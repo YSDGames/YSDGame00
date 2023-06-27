@@ -36,7 +36,7 @@ public class ShootBul : MonoBehaviour
                     ShootStright(numBullets, bulltype);
                     break;
                 case 1:
-                    ShootSpread(numBullets, bulltype ,5);
+                    ShootSpread(numBullets, bulltype ,15);
                     break;
             }
 
@@ -80,7 +80,7 @@ public class ShootBul : MonoBehaviour
     {
         for (int i = 0; i < numBullets; i++)
         {
-            GameObject b = Instantiate(KindOfBullet.instance.Kind(bulltype), transform.position, Quaternion.identity);
+            GameObject b = Instantiate(KindOfBullet.instance.Kind(bulltype), new Vector2(transform.position.x - 0.025f * (numBullets - 1) + i * 0.05f, transform.position.y), Quaternion.identity);
             b.transform.rotation = Quaternion.Euler(0, 0, (90 + (((numBullets-1) / 2) * rad) - (rad * i)));
 
         }
