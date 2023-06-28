@@ -10,6 +10,8 @@ public class bullets : MonoBehaviour
     public GameObject aura;
     //[SerializeField] float shootSpeed = 0.2f;
     public float damage = 1f;
+    public int attackNum;
+    int setAttackNum = 1;
     
 
 
@@ -17,7 +19,9 @@ public class bullets : MonoBehaviour
     {
         //ShootBul.Instance.shootSpeed = shootSpeed;
         transform.rotation = Quaternion.Euler(0f, 0f, 90f);
-        
+        attackNum = setAttackNum;
+
+
     }
 
     private void Update()
@@ -26,10 +30,18 @@ public class bullets : MonoBehaviour
         DestroyBullet();
     }
 
-    
+    private void OnEnable()
+    {
+        attackNum = setAttackNum;
+    }
 
     void DestroyBullet()
     {
+        if (attackNum <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+
         //카메라밖으로 나가면 총알삭제
         if (transform.position.y > GameManager.instance.mainCamera.transform.position.y + Camera.main.orthographicSize + 1)
         {

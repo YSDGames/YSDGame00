@@ -66,8 +66,8 @@ public class Enemy : MonoBehaviour
             bullets bullet = collision.gameObject.GetComponent<bullets>();
 
             hp -= bullet.damage;
-            GameManager.instance.effectPool.GetPool(0, transform.position, bullet.hitEffect.transform.rotation);
-            collision.gameObject.SetActive(false);
+            Instantiate(GameManager.instance.effectPool.pool[0], transform.position, bullet.hitEffect.transform.rotation);
+            bullet.attackNum -= 1;
 
             if (hp <= 0)
             {
