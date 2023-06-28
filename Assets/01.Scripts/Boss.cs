@@ -84,7 +84,7 @@ public class Boss : MonoBehaviour
             SoundManager.instance.SFXPlay("BossDie", bossDieSound, 1.0f);
 
             // 경험치볼 생성.
-            GameObject expObj = GameManager.instance.pool.GetPool(1);
+            GameObject expObj = GameManager.instance.ballPool.GetPool(1);
             expObj.gameObject.transform.position = transform.position;
             expObj.gameObject.GetComponent<ExpBall>().exp = this.exp;
 

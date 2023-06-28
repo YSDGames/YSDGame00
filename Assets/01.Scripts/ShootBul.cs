@@ -71,7 +71,7 @@ public class ShootBul : MonoBehaviour
     {
         for (int i = 0; i < numBullets; i++)
         {
-            Instantiate(KindOfBullet.instance.Kind(bulltype), new Vector2(transform.position.x - 0.075f* (numBullets-1) + i*0.15f, transform.position.y), Quaternion.identity);
+            GameManager.instance.bulletPool.GetPool(bulltype, new Vector2(transform.position.x - 0.075f* (numBullets-1) + i*0.15f, transform.position.y), Quaternion.identity);
 
         }
     }
@@ -80,7 +80,7 @@ public class ShootBul : MonoBehaviour
     {
         for (int i = 0; i < numBullets; i++)
         {
-            GameObject b = Instantiate(KindOfBullet.instance.Kind(bulltype), new Vector2(transform.position.x - 0.025f * (numBullets - 1) + i * 0.05f, transform.position.y), Quaternion.identity);
+            GameObject b = GameManager.instance.bulletPool.GetPool(bulltype, new Vector2(transform.position.x - 0.025f * (numBullets - 1) + i * 0.05f, transform.position.y), Quaternion.identity);
             b.transform.rotation = Quaternion.Euler(0, 0, (90 + (((numBullets-1) / 2) * rad) - (rad * i)));
 
         }

@@ -63,8 +63,11 @@ public class Enemy : MonoBehaviour
     {
         if (collision.CompareTag("Bullet"))
         {
-            hp -= collision.gameObject.GetComponent<bullets>().damage;
-            Destroy(collision.gameObject);
+            bullets bullet = collision.gameObject.GetComponent<bullets>();
+
+            hp -= bullet.damage;
+            GameManager.instance.effectPool.GetPool(0, transform.position, bullet.hitEffect.transform.rotation);
+            collision.gameObject.SetActive(false);
 
             if (hp <= 0)
             {
@@ -73,7 +76,7 @@ public class Enemy : MonoBehaviour
                 rig.simulated = false;
                 aniControl.SetBool("Live", false);
                 spriter.sortingOrder = -1;
-
+                 
                 SoundManager.instance.SFXPlay("EnemyDie", enemyDieSound, 2f);
 
             }
@@ -152,7 +155,7 @@ public class Enemy : MonoBehaviour
     void Dead()
     {
         // 경험치볼 생성.
-        GameObject expObj = GameManager.instance.pool.GetPool(0);
+        GameObject expObj = GameManager.instance.ballPool.GetPool(0);
         expObj.gameObject.transform.position = transform.position;
         expObj.gameObject.GetComponent<ExpBall>().exp = this.exp;
 

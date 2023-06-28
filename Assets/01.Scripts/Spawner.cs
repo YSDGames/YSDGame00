@@ -7,10 +7,17 @@ public class Spawner : MonoBehaviour
     public Transform[] spawnPoint;
     [SerializeField] GameObject[] Bosses;
     int bossNum;
-
-
     float timer = 0;
 
+    enum MonsterName
+    {
+        Lv0,
+        Lv1,
+        Lv2,
+        Lv3,
+        Lv4,
+        Lv5
+    }
 
 
     private void Awake()
@@ -41,9 +48,9 @@ public class Spawner : MonoBehaviour
         {
             if (timer > 1f)
             {
-                Spawn(7, "all");
-                Spawn(3, "left");
-                Spawn(3, "left");
+                Spawn((int)MonsterName.Lv5, "all");
+                Spawn((int)MonsterName.Lv1, "left");
+                Spawn((int)MonsterName.Lv1, "left");
 
                 timer = 0;
             }
@@ -52,11 +59,11 @@ public class Spawner : MonoBehaviour
         {
             if (timer > 3f)
             {
-                Spawn(7, "center");
-                Spawn(6, "right");
-                Spawn(6, "left");
-                Spawn(3, "left");
-                Spawn(3, "left");
+                Spawn((int)MonsterName.Lv5, "center");
+                Spawn((int)MonsterName.Lv4, "right");
+                Spawn((int)MonsterName.Lv4, "left");
+                Spawn((int)MonsterName.Lv1, "left");
+                Spawn((int)MonsterName.Lv1, "left");
                 timer = 0;
             }
         }
@@ -64,10 +71,10 @@ public class Spawner : MonoBehaviour
         {
             if (timer > 3f)
             {
-                Spawn(6, "center");
-                Spawn(5, "right");
-                Spawn(5, "left");
-                Spawn(3, "left");
+                Spawn((int)MonsterName.Lv4, "center");
+                Spawn((int)MonsterName.Lv3, "right");
+                Spawn((int)MonsterName.Lv3, "left");
+                Spawn((int)MonsterName.Lv1, "left");
 
 
                 timer = 0;
@@ -77,9 +84,9 @@ public class Spawner : MonoBehaviour
         {
             if (timer > 3f)
             {
-                Spawn(6, "center");
-                Spawn(5, "all");
-                Spawn(4, "all");
+                Spawn((int)MonsterName.Lv4, "center");
+                Spawn((int)MonsterName.Lv3, "all");
+                Spawn((int)MonsterName.Lv2, "all");
                 timer = 0;
             }
         }
@@ -87,9 +94,9 @@ public class Spawner : MonoBehaviour
         {
             if (timer > 3f)
             {
-                Spawn(5, "center");
-                Spawn(4, "all");
-                Spawn(4, "all");
+                Spawn((int)MonsterName.Lv3, "center");
+                Spawn((int)MonsterName.Lv2, "all");
+                Spawn((int)MonsterName.Lv2, "all");
                 timer = 0;
             }
         }
@@ -97,9 +104,9 @@ public class Spawner : MonoBehaviour
         {
             if (timer > 3f)
             {
-                Spawn(5, "center");
-                Spawn(3, "right");
-                Spawn(3, "left");
+                Spawn((int)MonsterName.Lv3, "center");
+                Spawn((int)MonsterName.Lv1, "right");
+                Spawn((int)MonsterName.Lv1, "left");
                 timer = 0;
             }
         }
@@ -107,8 +114,8 @@ public class Spawner : MonoBehaviour
         {
             if (timer > 1f)
             {
-                Spawn(4, "all");
-                Spawn(2, "center");
+                Spawn((int)MonsterName.Lv2, "all");
+                Spawn((int)MonsterName.Lv0, "center");
 
                 timer = 0;
             }
@@ -117,8 +124,8 @@ public class Spawner : MonoBehaviour
         {
             if (timer > 1f)
             {
-                Spawn(3, "all");
-                Spawn(2, "all");
+                Spawn((int)MonsterName.Lv1, "all");
+                Spawn((int)MonsterName.Lv0, "all");
                 timer = 0;
             }
         }
@@ -126,8 +133,8 @@ public class Spawner : MonoBehaviour
         {
             if (timer > 1.5)
             {
-                Spawn(3, "right");
-                Spawn(2, "left");
+                Spawn((int)MonsterName.Lv1, "right");
+                Spawn((int)MonsterName.Lv0, "left");
                 timer = 0;
             }
         }
@@ -135,7 +142,7 @@ public class Spawner : MonoBehaviour
         {
             if (timer > 0.5)
             {
-                Spawn(2, "center");
+                Spawn((int)MonsterName.Lv0, "center");
                 timer = 0;
             }
         }
@@ -143,7 +150,7 @@ public class Spawner : MonoBehaviour
         {
             if (timer > 1.5)
             {
-                Spawn(2, "center");
+                Spawn((int)MonsterName.Lv0, "center");
                 timer = 0;
             }
         }
@@ -155,20 +162,20 @@ public class Spawner : MonoBehaviour
         switch (spawnDir)
         {
             case "right":
-                GameObject enemy0 = GameManager.instance.pool.GetPool(monsterType);
+                GameObject enemy0 = GameManager.instance.enemyPool.GetPool(monsterType);
                 enemy0.transform.position = spawnPoint[Random.Range(1, 6)].position;
                 break;
             case "left":
-                GameObject enemy1 = GameManager.instance.pool.GetPool(monsterType);
+                GameObject enemy1 = GameManager.instance.enemyPool.GetPool(monsterType);
                 enemy1.transform.position = spawnPoint[Random.Range(11, spawnPoint.Length)].position;
                 break;
             case "center":
-                GameObject enemy2 = GameManager.instance.pool.GetPool(monsterType);
+                GameObject enemy2 = GameManager.instance.enemyPool.GetPool(monsterType);
                 enemy2.transform.position = spawnPoint[Random.Range(6, 11)].position;
                 break;
             case "all":
             default:
-                GameObject enemy3 = GameManager.instance.pool.GetPool(monsterType);
+                GameObject enemy3 = GameManager.instance.enemyPool.GetPool(monsterType);
                 enemy3.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
                 break;
         }

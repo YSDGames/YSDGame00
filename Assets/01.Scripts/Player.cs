@@ -5,6 +5,7 @@ using UnityEngine.XR;
 
 public class Player : MonoBehaviour
 {
+    int typeOrb;
     public GameObject shootpoint;
     public static Player instance;
     public GameObject hpBar;

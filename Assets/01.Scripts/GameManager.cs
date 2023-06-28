@@ -10,7 +10,17 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
 
-    public PoolManager pool;
+    public PoolManager enemyPool;
+    public PoolManager bulletPool;
+    public PoolManager auraPool;
+    public PoolManager effectPool;
+    public PoolManager ballPool;
+
+
+
+
+
+
     public Player player;
     public GameObject mainCamera;
     public Transform expBar;
