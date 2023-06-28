@@ -16,11 +16,8 @@ public class GameManager : MonoBehaviour
     public PoolManager effectPool;
     public PoolManager ballPool;
 
-
-
-
-
-
+    public Orb orbManager;
+    public Orb playerOrb;
     public Player player;
     public GameObject mainCamera;
     public Transform expBar;
@@ -30,7 +27,8 @@ public class GameManager : MonoBehaviour
     public Vector3 bossPosition;
     public int playerLevel;
     public float exp;
-    float timer ;
+
+    float timer;
     float endTime = 12 * 60;
     public int shootType;
     List<int> expOfLevel;
@@ -44,6 +42,8 @@ public class GameManager : MonoBehaviour
         timer = 0;
         exp = 0;
         shootType = 0;
+
+        playerOrb = orbManager.GetComponent<FireOrb>();
     }
     private void Awake()
     {

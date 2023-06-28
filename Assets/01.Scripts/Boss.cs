@@ -19,7 +19,7 @@ public class Boss : MonoBehaviour
     {
 
         Move();
-        
+        Dead();
 
     }
 
@@ -27,9 +27,13 @@ public class Boss : MonoBehaviour
     {
         if (collision.CompareTag("Bullet"))
         {
-            hp -= collision.gameObject.GetComponent<bullets>().damage;
-            Destroy(collision.gameObject);
-            Dead();
+            bullets bullet = collision.gameObject.GetComponent<bullets>();
+
+            hp -= bullet.totalDamage;
+            bullet.totalPiercingNum -= 1;
+
+            GameManager.instance.playerOrb.MakeEffect(collision);
+            GameManager.instance.playerOrb.MakeSound();
         }
     }
 

@@ -48,7 +48,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 6
   hitEffect: {fileID: 2433282508537954060, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
+  aura: {fileID: 0}
   damage: 1
+  totalDamage: 0
+  piercingNum: 1
+  totalPiercingNum: 0
 --- !u!212 &7293985392578436
 SpriteRenderer:
   m_ObjectHideFlags: 0

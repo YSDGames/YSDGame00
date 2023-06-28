@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public float hp;
     [SerializeField] AudioClip enemyDieSound;
 
+
     Animator aniControl;
 
     SpriteRenderer spriter;
@@ -45,8 +46,6 @@ public class Enemy : MonoBehaviour
         LookPlayer();
         GoToPlayer();
         Reposition();
-        
-
     }
 
     private void OnEnable()
@@ -65,9 +64,11 @@ public class Enemy : MonoBehaviour
         {
             bullets bullet = collision.gameObject.GetComponent<bullets>();
 
-            hp -= bullet.damage;
-            Instantiate(GameManager.instance.effectPool.pool[0], transform.position, bullet.hitEffect.transform.rotation);
-            bullet.attackNum -= 1;
+            hp -= bullet.totalDamage;
+            bullet.totalPiercingNum -= 1;
+
+            GameManager.instance.playerOrb.MakeEffect(collision);
+            GameManager.instance.playerOrb.MakeSound();
 
             if (hp <= 0)
             {
@@ -76,11 +77,9 @@ public class Enemy : MonoBehaviour
                 rig.simulated = false;
                 aniControl.SetBool("Live", false);
                 spriter.sortingOrder = -1;
-                 
+
                 SoundManager.instance.SFXPlay("EnemyDie", enemyDieSound, 2f);
-
             }
-
         }
     }
 
@@ -91,7 +90,6 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             GameManager.instance.player.nowHp -= damage;
-
         }
     }
 
@@ -133,13 +131,11 @@ public class Enemy : MonoBehaviour
         else
         {
             transform.position += dirVec * Time.deltaTime * speed;
-
         }
 
         //카메라 밖에 있을때 빠르게 움직이게
         float distanceFroemCameraX = Mathf.Abs(transform.position.x - GameManager.instance.mainCamera.transform.position.x);
         float distanceFroemCameraY = Mathf.Abs(transform.position.y - GameManager.instance.mainCamera.transform.position.y);
-
 
         if (distanceFroemCameraX > 6 || distanceFroemCameraY > 8)
         {
@@ -149,9 +145,7 @@ public class Enemy : MonoBehaviour
         {
             speed = mainSpeed;
         }
-
     }
-
     void Dead()
     {
         // 경험치볼 생성.
@@ -161,7 +155,6 @@ public class Enemy : MonoBehaviour
 
         gameObject.SetActive(false);
     }
-
     void Reposition()
     {
         if (transform.position.y < -6)

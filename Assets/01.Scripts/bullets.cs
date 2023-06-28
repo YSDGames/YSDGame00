@@ -6,22 +6,25 @@ using UnityEngine;
 public class bullets : MonoBehaviour
 {
     [SerializeField] private float bulletSpeed = 3f;
+   
+
     public GameObject hitEffect;
     public GameObject aura;
     //[SerializeField] float shootSpeed = 0.2f;
     public float damage = 1f;
-    public int attackNum;
-    int setAttackNum = 1;
-    
-
+    [HideInInspector]public float totalDamage;
+    public int piercingNum = 1;
+    [HideInInspector] public int totalPiercingNum;
 
     private void Awake()
     {
         //ShootBul.Instance.shootSpeed = shootSpeed;
         transform.rotation = Quaternion.Euler(0f, 0f, 90f);
-        attackNum = setAttackNum;
+       
 
 
+        totalDamage = damage;
+        totalPiercingNum = piercingNum;
     }
 
     private void Update()
@@ -30,14 +33,9 @@ public class bullets : MonoBehaviour
         DestroyBullet();
     }
 
-    private void OnEnable()
-    {
-        attackNum = setAttackNum;
-    }
-
     void DestroyBullet()
     {
-        if (attackNum <= 0)
+        if (totalPiercingNum <= 0)
         {
             gameObject.SetActive(false);
         }

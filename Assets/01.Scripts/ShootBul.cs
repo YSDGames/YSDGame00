@@ -66,13 +66,20 @@ public class ShootBul : MonoBehaviour
             shootSpeed = 0.2f;
     }
 
+    void UpdateStat(GameObject b)
+    {
+        bullets bullet = b.GetComponent<bullets>();
+
+        bullet.totalDamage = bullet.damage + GameManager.instance.playerOrb.addDamage;
+        bullet.totalPiercingNum = bullet.piercingNum + GameManager.instance.playerOrb.addPiercingNum;
+    }
 
     void ShootStright(float numBullets, int bulltype)
     {
         for (int i = 0; i < numBullets; i++)
         {
-            GameManager.instance.bulletPool.GetPool(bulltype, new Vector2(transform.position.x - 0.075f* (numBullets-1) + i*0.15f, transform.position.y), Quaternion.identity);
-
+            GameObject b = GameManager.instance.bulletPool.GetPool(bulltype, new Vector2(transform.position.x - 0.075f* (numBullets-1) + i*0.15f, transform.position.y), Quaternion.identity);
+            UpdateStat(b);
         }
     }
 
@@ -82,9 +89,11 @@ public class ShootBul : MonoBehaviour
         {
             GameObject b = GameManager.instance.bulletPool.GetPool(bulltype, new Vector2(transform.position.x - 0.025f * (numBullets - 1) + i * 0.05f, transform.position.y), Quaternion.identity);
             b.transform.rotation = Quaternion.Euler(0, 0, (90 + (((numBullets-1) / 2) * rad) - (rad * i)));
+            UpdateStat(b);
 
         }
     }
+
 
 
 }
