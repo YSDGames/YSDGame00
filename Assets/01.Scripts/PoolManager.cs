@@ -7,14 +7,9 @@ public class PoolManager : MonoBehaviour
     public GameObject[] pool;
     List<GameObject>[] enemyList;
 
-    public static PoolManager instance;
-
     private void Awake()
     {
-        instance = this;
-
         enemyList = new List<GameObject>[pool.Length];
-
 
         for (int i = 0; i < pool.Length; i++)
         {

@@ -9,27 +9,36 @@ public class bullets : MonoBehaviour
    
 
     public GameObject hitEffect;
-    public GameObject aura;
     //[SerializeField] float shootSpeed = 0.2f;
     public float damage = 1f;
     [HideInInspector]public float totalDamage;
+
     public int piercingNum = 1;
     [HideInInspector] public int totalPiercingNum;
+
+    public bool rotTrigger;
 
     private void Awake()
     {
         //ShootBul.Instance.shootSpeed = shootSpeed;
         transform.rotation = Quaternion.Euler(0f, 0f, 90f);
-       
-
-
         totalDamage = damage;
         totalPiercingNum = piercingNum;
+        rotTrigger = false;
+
+    }
+
+    private void Start()
+    {
+        Transform[] childTrans = GetComponentsInChildren<Transform>();
+        if (GameManager.instance.playerOrb.aura)
+            Instantiate(GameManager.instance.playerOrb.aura, childTrans[1]);
     }
 
     private void Update()
     {
-        Shoot();
+        if (!rotTrigger) Rotate();
+        else Rotate();
         DestroyBullet();
     }
 
@@ -46,11 +55,15 @@ public class bullets : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    void Shoot()
+    void Move()
     {
-        transform.Translate( Vector3.right * bulletSpeed * Time.deltaTime);
+        transform.Translate(Vector3.right * bulletSpeed * Time.deltaTime);
     }
 
+    void Rotate()
+    {
+
+    }
     
 }
 

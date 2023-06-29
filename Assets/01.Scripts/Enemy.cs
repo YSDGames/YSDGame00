@@ -65,8 +65,8 @@ public class Enemy : MonoBehaviour
             bullets bullet = collision.gameObject.GetComponent<bullets>();
 
             hp -= bullet.totalDamage;
-            bullet.totalPiercingNum -= 1;
 
+            bullet.totalPiercingNum -= 1;
             GameManager.instance.playerOrb.MakeEffect(collision);
             GameManager.instance.playerOrb.MakeSound();
 

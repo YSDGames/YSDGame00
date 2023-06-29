@@ -839,51 +839,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 132594450}
   m_CullTransparentMesh: 1
---- !u!1 &136151040
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 136151041}
-  - component: {fileID: 136151042}
-  m_Layer: 0
-  m_Name: BullBasePool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &136151041
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 136151040}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 413718512}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &136151042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 136151040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8742cb78a402e4d4ab024d0f8f0f6699, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pool: []
 --- !u!1 &140198221
 GameObject:
   m_ObjectHideFlags: 0
@@ -1782,7 +1737,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 413718512}
-  - component: {fileID: 413718511}
   m_Layer: 0
   m_Name: PoolManager
   m_TagString: Untagged
@@ -1790,28 +1744,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &413718511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 413718510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8742cb78a402e4d4ab024d0f8f0f6699, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pool:
-  - {fileID: 1956407195440187986, guid: 3a044243e29bd124fb14e570f293a746, type: 3}
-  - {fileID: 4931323286548584730, guid: 86ea68b6754434d49864f1b691131940, type: 3}
-  - {fileID: 240141801725756893, guid: 80fbaca63e12caf489da2643a4ff74af, type: 3}
-  - {fileID: 7714469895278950857, guid: 236a062d31c2cac409d12a9a0748c93d, type: 3}
-  - {fileID: 8290338996590285685, guid: db0003dd3bcc4da42b2616af8ca4a739, type: 3}
-  - {fileID: 2490932689047824748, guid: dbcf3fd93a51ba5409e0c3fdcc37faa0, type: 3}
-  - {fileID: 2490932689047824748, guid: ff7269b974c09e4409c6a527838e3ee8, type: 3}
-  - {fileID: 2490932689047824748, guid: 3772c91f1d8513248be87e3c22c49df5, type: 3}
-  - {fileID: 2490932689047824748, guid: 3772c91f1d8513248be87e3c22c49df5, type: 3}
 --- !u!4 &413718512
 Transform:
   m_ObjectHideFlags: 0
@@ -1829,7 +1761,6 @@ Transform:
   - {fileID: 820296545}
   - {fileID: 485835115}
   - {fileID: 1438523209}
-  - {fileID: 136151041}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1991,6 +1922,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitSound: {fileID: 8300000, guid: af66162561d2eed40ad49268cab318bb, type: 3}
   hitEffect: {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+  aura: {fileID: 100000, guid: ee8a2f84d6f16064d9f8eb2f6f5e0597, type: 3}
   soundVol: 0
   addDamage: 0
   addPiercingNum: 0
@@ -2008,6 +1940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitSound: {fileID: 8300000, guid: ab297b593498a6e47ba84de770477cbe, type: 3}
   hitEffect: {fileID: 100000, guid: 77ec3c4e07a36814fb3169ecef41b50a, type: 3}
+  aura: {fileID: 100000, guid: 4d37856c31e9e7d46a1005519332b935, type: 3}
   soundVol: 0
   addDamage: 0
   addPiercingNum: 0
@@ -2040,6 +1973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitSound: {fileID: 8300000, guid: 0994c12e202f342459a4212e7287f7e8, type: 3}
   hitEffect: {fileID: 8525990746615576120, guid: b85d21f3b8fed714bacf0c4fd50fa512, type: 3}
+  aura: {fileID: 0}
   soundVol: 0
   addDamage: 0
   addPiercingNum: 0

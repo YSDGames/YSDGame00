@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6348369888046758898}
   m_Layer: 0
-  m_Name: Base
+  m_Name: Aura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 6
   hitEffect: {fileID: 0}
-  aura: {fileID: 0}
   damage: 3
   totalDamage: 0
   piercingNum: 1

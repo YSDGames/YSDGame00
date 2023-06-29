@@ -6,6 +6,11 @@ public abstract class Orb : MonoBehaviour
 {
     [SerializeField] public AudioClip hitSound;
     [SerializeField] public GameObject hitEffect;
+    [SerializeField] public GameObject aura;
+
+    List<GameObject> hitEffectList; 
+
+
 
     public float soundVol;
     [HideInInspector] public float addDamage;
@@ -14,6 +19,7 @@ public abstract class Orb : MonoBehaviour
     private void Awake()
     {
         Init();
+        hitEffectList = new List<GameObject>();
     }
 
     private void Update()

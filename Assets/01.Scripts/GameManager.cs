@@ -41,9 +41,9 @@ public class GameManager : MonoBehaviour
         playerLevel = 1;
         timer = 0;
         exp = 0;
-        shootType = 0;
+        shootType = 2;
 
-        playerOrb = orbManager.GetComponent<NoneOrb>();
+        playerOrb = orbManager.GetComponent<ElectricOrb>();
     }
     private void Awake()
     {
@@ -75,7 +75,13 @@ public class GameManager : MonoBehaviour
             350,      
             400,     //15
             450,
-            500
+            500,
+            550,
+            600,
+            700,     //20
+            800,
+            900
+
 
         };
 

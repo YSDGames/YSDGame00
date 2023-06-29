@@ -14,7 +14,7 @@ public class Boss : MonoBehaviour
     int moveDirec = 1;
 
     float timer;
-    float damageInterval=1f;
+    float damageInterval = 1f;
     void Update()
     {
 
@@ -30,8 +30,8 @@ public class Boss : MonoBehaviour
             bullets bullet = collision.gameObject.GetComponent<bullets>();
 
             hp -= bullet.totalDamage;
-            bullet.totalPiercingNum -= 1;
 
+            bullet.totalPiercingNum -= 1;
             GameManager.instance.playerOrb.MakeEffect(collision);
             GameManager.instance.playerOrb.MakeSound();
         }
@@ -65,11 +65,11 @@ public class Boss : MonoBehaviour
     {
         if (transform.position.y > 10)
         {
-            transform.position += Vector3.down * Time.deltaTime * speed*2f;
+            transform.position += Vector3.down * Time.deltaTime * speed * 2f;
         }
         else
         {
-            transform.position +=  Vector3.right * Time.deltaTime * speed * moveDirec;
+            transform.position += Vector3.right * Time.deltaTime * speed * moveDirec;
             if (transform.position.x > 10) moveDirec = -1;
             else if (transform.position.x < -10) moveDirec = 1;
 

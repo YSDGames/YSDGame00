@@ -36,7 +36,10 @@ public class ShootBul : MonoBehaviour
                     ShootStright(numBullets, bulltype);
                     break;
                 case 1:
-                    ShootSpread(numBullets, bulltype ,15);
+                    ShootSpread(numBullets, bulltype, 15);
+                    break;
+                case 2:
+                    ShootRotate(numBullets, bulltype);
                     break;
             }
 
@@ -48,7 +51,7 @@ public class ShootBul : MonoBehaviour
 
 
     }
-    
+
     void SetShooting()
     {
         //레벨에 따라 총알 종류, 쏘는 타입 결정.
@@ -70,6 +73,8 @@ public class ShootBul : MonoBehaviour
     {
         bullets bullet = b.GetComponent<bullets>();
 
+        bullet.rotTrigger = false;
+
         bullet.totalDamage = bullet.damage + GameManager.instance.playerOrb.addDamage;
         bullet.totalPiercingNum = bullet.piercingNum + GameManager.instance.playerOrb.addPiercingNum;
     }
@@ -78,27 +83,45 @@ public class ShootBul : MonoBehaviour
     {
         for (int i = 0; i < numBullets; i++)
         {
-            GameObject b = GameManager.instance.bulletPool.GetPool(bulltype, new Vector2(transform.position.x - 0.075f* (numBullets-1) + i*0.15f, transform.position.y), Quaternion.identity);
+            GameObject b = GameManager.instance.bulletPool.GetPool(bulltype, new Vector2(transform.position.x - 0.075f * (numBullets - 1) + i * 0.15f, transform.position.y), Quaternion.identity);
+            b.transform.rotation = Quaternion.Euler(0, 0, 90);
             UpdateStat(b);
         }
     }
 
-    void ShootSpread(float numBullets,  int bulltype, float rad)
+    void ShootSpread(float numBullets, int bulltype, float rad)
     {
         for (int i = 0; i < numBullets; i++)
         {
             GameObject b = GameManager.instance.bulletPool.GetPool(bulltype, new Vector2(transform.position.x - 0.025f * (numBullets - 1) + i * 0.05f, transform.position.y), Quaternion.identity);
-            b.transform.rotation = Quaternion.Euler(0, 0, (90 + (((numBullets-1) / 2) * rad) - (rad * i)));
+            b.transform.rotation = Quaternion.Euler(0, 0, (90 + (((numBullets - 1) / 2) * rad) - (rad * i)));
             UpdateStat(b);
 
         }
     }
 
+    void ShootRotate(float numBullets, int bulltype)
+    {
+        IEnumerator DShoot = DelayShoot(numBullets, bulltype);
 
+        StartCoroutine("DShoot");
+    }
 
+    IEnumerator DelayShoot(float numBullets, int bulltype)
+    {
+        for (int i = 0; i < numBullets; i++)
+        {
+            GameObject b = GameManager.instance.bulletPool.GetPool(bulltype);
+            b.transform.rotation = Quaternion.Euler(0, 0, 90);
+            UpdateStat(b);
+            b.gameObject.GetComponent<bullets>().rotTrigger = true;
+
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
 }
 
-    
+
 
 
 
