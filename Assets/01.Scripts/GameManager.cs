@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
         exp = 0;
         shootType = 0;
 
-        playerOrb = orbManager.GetComponent<FireOrb>();
+        playerOrb = orbManager.GetComponent<NoneOrb>();
     }
     private void Awake()
     {
