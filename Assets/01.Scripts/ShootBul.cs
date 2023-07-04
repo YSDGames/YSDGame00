@@ -43,7 +43,7 @@ public class ShootBul : MonoBehaviour
                     break;
             }
 
-            SoundManager.instance.SFXPlay("Shoot", soundShoot, 0.5f);
+            
 
             timer = 0;
 
@@ -74,6 +74,9 @@ public class ShootBul : MonoBehaviour
         bullets bullet = b.GetComponent<bullets>();
 
         bullet.rotTrigger = false;
+        bullet.rotTimer = 0;
+        bullet.deg = 0;
+
 
         bullet.totalDamage = bullet.damage + GameManager.instance.playerOrb.addDamage;
         bullet.totalPiercingNum = bullet.piercingNum + GameManager.instance.playerOrb.addPiercingNum;
@@ -86,6 +89,8 @@ public class ShootBul : MonoBehaviour
             GameObject b = GameManager.instance.bulletPool.GetPool(bulltype, new Vector2(transform.position.x - 0.075f * (numBullets - 1) + i * 0.15f, transform.position.y), Quaternion.identity);
             b.transform.rotation = Quaternion.Euler(0, 0, 90);
             UpdateStat(b);
+
+            SoundManager.instance.SFXPlay("Shoot", soundShoot, 0.5f);
         }
     }
 
@@ -97,26 +102,27 @@ public class ShootBul : MonoBehaviour
             b.transform.rotation = Quaternion.Euler(0, 0, (90 + (((numBullets - 1) / 2) * rad) - (rad * i)));
             UpdateStat(b);
 
+            SoundManager.instance.SFXPlay("Shoot", soundShoot, 0.5f);
+
         }
     }
 
     void ShootRotate(float numBullets, int bulltype)
     {
-        IEnumerator DShoot = DelayShoot(numBullets, bulltype);
-
-        StartCoroutine("DShoot");
+        StartCoroutine(DelayShoot(numBullets, bulltype));
     }
 
     IEnumerator DelayShoot(float numBullets, int bulltype)
     {
         for (int i = 0; i < numBullets; i++)
         {
-            GameObject b = GameManager.instance.bulletPool.GetPool(bulltype);
-            b.transform.rotation = Quaternion.Euler(0, 0, 90);
+            GameObject b = GameManager.instance.bulletPool.GetPool(bulltype, transform.position, Quaternion.Euler(0, 0, 90));
             UpdateStat(b);
             b.gameObject.GetComponent<bullets>().rotTrigger = true;
 
-            yield return new WaitForSeconds(0.1f);
+
+            SoundManager.instance.SFXPlay("Shoot", soundShoot, 0.3f);
+            yield return new WaitForSeconds(0.3f);
         }
     }
 }

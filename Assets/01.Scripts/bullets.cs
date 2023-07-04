@@ -6,20 +6,25 @@ using UnityEngine;
 public class bullets : MonoBehaviour
 {
     [SerializeField] private float bulletSpeed = 3f;
-   
+
 
     public GameObject hitEffect;
     //[SerializeField] float shootSpeed = 0.2f;
     public float damage = 1f;
-    [HideInInspector]public float totalDamage;
+    [HideInInspector] public float totalDamage;
 
     public int piercingNum = 1;
     [HideInInspector] public int totalPiercingNum;
 
     public bool rotTrigger;
+    public float rotTimer;
+    public float deg;
+    float circleR;
 
     private void Awake()
     {
+        circleR = 1;
+        deg = 0;
         //ShootBul.Instance.shootSpeed = shootSpeed;
         transform.rotation = Quaternion.Euler(0f, 0f, 90f);
         totalDamage = damage;
@@ -37,13 +42,18 @@ public class bullets : MonoBehaviour
 
     private void Update()
     {
-        if (!rotTrigger) Rotate();
-        else Rotate();
+        if (rotTrigger) Rotate();
+        else Move();
+
         DestroyBullet();
     }
 
     void DestroyBullet()
     {
+        rotTimer += Time.deltaTime;
+
+        if (rotTimer > 5 && rotTrigger) gameObject.SetActive(false);
+
         if (totalPiercingNum <= 0)
         {
             gameObject.SetActive(false);
@@ -63,8 +73,22 @@ public class bullets : MonoBehaviour
     void Rotate()
     {
 
+        deg += Time.deltaTime * bulletSpeed * 20;
+        if (deg < 360)
+        {
+            var rad = Mathf.Deg2Rad * (deg);
+            var x = circleR * Mathf.Sin(rad);
+            var y = circleR * Mathf.Cos(rad);
+            transform.position = GameManager.instance.player.transform.position + new Vector3(x, y);
+            transform.rotation = Quaternion.Euler(0, 0, -1* deg);
+        }
+        else
+        {
+            deg = 0;
+        }
+
     }
-    
+
 }
 
 
