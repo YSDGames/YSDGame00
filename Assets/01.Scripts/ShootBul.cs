@@ -90,7 +90,7 @@ public class ShootBul : MonoBehaviour
             b.transform.rotation = Quaternion.Euler(0, 0, 90);
             UpdateStat(b);
 
-            SoundManager.instance.SFXPlay("Shoot", soundShoot, 0.5f);
+            SoundManager.instance.SFXPlay("Shoot", soundShoot, 0.3f);
         }
     }
 
@@ -102,7 +102,7 @@ public class ShootBul : MonoBehaviour
             b.transform.rotation = Quaternion.Euler(0, 0, (90 + (((numBullets - 1) / 2) * rad) - (rad * i)));
             UpdateStat(b);
 
-            SoundManager.instance.SFXPlay("Shoot", soundShoot, 0.5f);
+            SoundManager.instance.SFXPlay("Shoot", soundShoot, 0.3f);
 
         }
     }

@@ -20,6 +20,8 @@ public class UI : MonoBehaviour
 
     public void ChangShootType()
     {
-        GameManager.instance.shootType = GameManager.instance.shootType == 0 ? 1 : 0;
+        if (GameManager.instance.shootType == 0) GameManager.instance.shootType = 1;
+        else if (GameManager.instance.shootType == 1) GameManager.instance.shootType = 2;
+        else if (GameManager.instance.shootType == 2) GameManager.instance.shootType = 0;
     }
 }
