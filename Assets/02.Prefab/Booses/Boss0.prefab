@@ -51,7 +51,7 @@ MonoBehaviour:
   hp: 1000
   damage: 5
   speed: 0.5
-  exp: 50
+  exp: 100
 --- !u!212 &8142228380787896649
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -135,8 +135,8 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_IsTrigger: 1
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: -0.0008211136, y: 0}
   serializedVersion: 2

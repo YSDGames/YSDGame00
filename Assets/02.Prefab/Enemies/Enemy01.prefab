@@ -52,7 +52,7 @@ MonoBehaviour:
   hp: 0
   enemyDieSound: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
   damage: 1
-  speed: 0.5
+  speed: 1.2
   exp: 2
 --- !u!212 &899245065891094002
 SpriteRenderer:

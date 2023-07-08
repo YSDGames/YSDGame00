@@ -40,7 +40,6 @@ public class SoundManager : MonoBehaviour
         audioSource.volume = volume;
         audioSource.Play();
 
-
         Destroy(go, clip.length);
     }
 

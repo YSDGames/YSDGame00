@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class bullets : MonoBehaviour
 {
-    [SerializeField] private float bulletSpeed = 3f;
+    public float bulletSpeed = 3f;
 
 
     public GameObject hitEffect;
@@ -18,9 +18,11 @@ public class bullets : MonoBehaviour
 
     public bool rotTrigger;
     public float rotTimer;
-    public float deg;
-    float circleR;
+    public float rotLifeTime;
 
+    public float deg;
+    public float circleR;
+    Transform[] childTrans;
     private void Awake()
     {
         circleR = 1;
@@ -29,20 +31,28 @@ public class bullets : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, 90f);
         totalDamage = damage;
         totalPiercingNum = piercingNum;
+
         rotTrigger = false;
+        rotLifeTime = 10;
 
     }
 
     private void Start()
     {
         Transform[] childTrans = GetComponentsInChildren<Transform>();
-        if (GameManager.instance.playerOrb.aura)
+
+
+        //Item Orb = GameObject.Find("UI/LevelUp/Panel/Items").GetComponentInChildren<Item>();
+        if (GameManager.instance.playerOrb.aura != null)
             Instantiate(GameManager.instance.playerOrb.aura, childTrans[1]);
     }
 
+  
     private void Update()
     {
-        if (rotTrigger) Rotate();
+        
+
+        if (rotTrigger) Rotate(25);
         else Move();
 
         DestroyBullet();
@@ -52,15 +62,15 @@ public class bullets : MonoBehaviour
     {
         rotTimer += Time.deltaTime;
 
-        if (rotTimer > 5 && rotTrigger) gameObject.SetActive(false);
+        if (rotTimer > rotLifeTime && rotTrigger) gameObject.SetActive(false);
 
-        if (totalPiercingNum <= 0)
+        if (totalPiercingNum == 0)
         {
             gameObject.SetActive(false);
         }
 
         //카메라밖으로 나가면 총알삭제
-        if (transform.position.y > GameManager.instance.mainCamera.transform.position.y + Camera.main.orthographicSize + 1)
+        if (transform.position.y > GameManager.instance.mainCamera.transform.position.y + Camera.main.orthographicSize + 3)
         {
             gameObject.SetActive(false);
         }
@@ -70,17 +80,17 @@ public class bullets : MonoBehaviour
         transform.Translate(Vector3.right * bulletSpeed * Time.deltaTime);
     }
 
-    void Rotate()
+    void Rotate(float rotSpeed)
     {
 
-        deg += Time.deltaTime * bulletSpeed * 20;
+        deg += Time.deltaTime * bulletSpeed * rotSpeed;
         if (deg < 360)
         {
             var rad = Mathf.Deg2Rad * (deg);
             var x = circleR * Mathf.Sin(rad);
             var y = circleR * Mathf.Cos(rad);
             transform.position = GameManager.instance.player.transform.position + new Vector3(x, y);
-            transform.rotation = Quaternion.Euler(0, 0, -1* deg);
+            transform.rotation = Quaternion.Euler(0, 0, -1 * deg);
         }
         else
         {

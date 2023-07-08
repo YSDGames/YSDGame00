@@ -9,6 +9,7 @@ public class UI : MonoBehaviour
     public void Retry()
     {
         SceneManager.LoadScene("SampleScene");
+        GameManager.instance.gameState = GameManager.GameState.ing;
         Time.timeScale = 1.0f;
     }
 
@@ -16,12 +17,5 @@ public class UI : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene");
         
-    }
-
-    public void ChangShootType()
-    {
-        if (GameManager.instance.shootType == 0) GameManager.instance.shootType = 1;
-        else if (GameManager.instance.shootType == 1) GameManager.instance.shootType = 2;
-        else if (GameManager.instance.shootType == 2) GameManager.instance.shootType = 0;
     }
 }

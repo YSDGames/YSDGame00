@@ -25,13 +25,14 @@ public class PoolManager : MonoBehaviour
 
         foreach (GameObject e in enemyList[num])
         {
-            if (!e.activeSelf)
-            {
-                select = e;
-                e.gameObject.SetActive(true);
+            if (e != null)
+                if (!e.activeSelf)
+                {
+                    select = e;
+                    e.gameObject.SetActive(true);
 
-                break;
-            }
+                    break;
+                }
         }
         if (!select)
         {
@@ -48,14 +49,15 @@ public class PoolManager : MonoBehaviour
 
         foreach (GameObject e in enemyList[num])
         {
-            if (!e.activeSelf)
-            {
-                select = e;
-                e.gameObject.SetActive(true);
-                e.transform.position = position;
+            if (e != null)
+                if (!e.activeSelf)
+                {
+                    select = e;
+                    e.gameObject.SetActive(true);
+                    e.transform.position = position;
 
-                break;
-            }
+                    break;
+                }
         }
         if (!select)
         {
@@ -65,6 +67,6 @@ public class PoolManager : MonoBehaviour
         return select;
     }
 
-    
+
 
 }

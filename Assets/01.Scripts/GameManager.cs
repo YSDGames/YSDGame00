@@ -16,39 +16,43 @@ public class GameManager : MonoBehaviour
     public PoolManager effectPool;
     public PoolManager ballPool;
 
-    public Orb orbManager;
-    public Orb playerOrb;
+    public GameObject gameStart;
+    public Item playerOrb;
     public Player player;
     public GameObject mainCamera;
     public Transform expBar;
     public GameObject dieUI;
     public GameObject clearUI;
+    public LevelUp uiLevelUp;
 
     public Vector3 bossPosition;
     public int playerLevel;
     public float exp;
 
     float timer;
-    float endTime = 12 * 60;
+    float endTime = 12 * 60 + 1;
     public int shootType;
     List<int> expOfLevel;
 
     [SerializeField] Text time;
     [SerializeField] Text level;
 
+    public GameState gameState;
+    public enum GameState
+    {
+        ing,
+        stay
+    }
     void Init()
     {
         playerLevel = 1;
         timer = 0;
         exp = 0;
         shootType = 0;
-
-        playerOrb = orbManager.GetComponent<FireOrb>();
-        
     }
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -73,7 +77,7 @@ public class GameManager : MonoBehaviour
             210,
             240,
             270,
-            350,      
+            350,
             400,     //15
             450,
             500,
@@ -91,27 +95,29 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Init();
+        GameStart();
     }
 
     void Update()
     {
-        
+        if (gameState == GameState.stay)
+            return;
         // 타이머, 레벨s
         timer += Time.deltaTime;
-        time.text = $"{(int)(endTime-timer) / 60:D2}:{(int)(endTime - timer) % 60:D2}";
+        time.text = $"{(int)(endTime - timer) / 60:D2}:{(int)(endTime - timer) % 60:D2}";
 
         level.text = $"Level : {playerLevel}";
 
         // 0초시 게임종료
-        if (timer <= 0)
+        if (endTime <= timer)
         {
-            timer = 0;
+            timer = endTime;
             GameOver();
         }
         LevelUp();
         GetBossDir();
     }
-   
+
     void LevelUp()
     {
         // 경험치, 경험치바
@@ -120,6 +126,7 @@ public class GameManager : MonoBehaviour
             exp -= expOfLevel[playerLevel];
             playerLevel += 1;
             player.nowHp += 1;
+            uiLevelUp.Show();
         }
 
         //최대레벨 초과시 레벨 그대로.
@@ -143,21 +150,30 @@ public class GameManager : MonoBehaviour
     public void GameClear()
     {
         Time.timeScale = 0;
+        gameState = GameState.stay;
         clearUI.SetActive(true);
+    }
+
+    public void GameStart()
+    {
+        gameStart.SetActive(true);
+        gameState = GameState.stay;
+        Time.timeScale = 0;
     }
 
     public void GameOver()
     {
         Time.timeScale = 0;
+        gameState = GameState.stay;
         dieUI.SetActive(true);
     }
 
     void GetBossDir()
     {
         //보스가 존재할때만 킴.
-        if (GameObject.FindWithTag("Boss")==null)
+        if (GameObject.FindWithTag("Boss") == null)
         {
-            BossDirc.instance.gameObject.SetActive(false);
+            BossDirc.instance.gameObject.transform.localScale = Vector3.zero;
         }
         else
         {
@@ -167,13 +183,14 @@ public class GameManager : MonoBehaviour
 
             if (CameraCheckBoss.x < BossDirc.instance.staticMaxX + 4 && CameraCheckBoss.x > BossDirc.instance.staticMinX - 4 && CameraCheckBoss.y < BossDirc.instance.staticMaxY + 4 && CameraCheckBoss.y > BossDirc.instance.staticMinY - 4)
             {
-                BossDirc.instance.gameObject.SetActive(false);
+                BossDirc.instance.gameObject.transform.localScale = Vector3.zero;
             }
             else
             {
-                BossDirc.instance.gameObject.SetActive(true);
+                BossDirc.instance.gameObject.transform.localScale = Vector3.one;
             }
         }
     }
+
 
 }

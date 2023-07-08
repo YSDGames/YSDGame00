@@ -28,27 +28,25 @@ public class Boss : MonoBehaviour
         if (collision.CompareTag("Bullet"))
         {
             bullets bullet = collision.gameObject.GetComponent<bullets>();
+            //Item Orb = GameObject.Find("UI/Items").GetComponentInChildren<Item>();
 
             hp -= bullet.totalDamage;
 
             bullet.totalPiercingNum -= 1;
-            GameManager.instance.playerOrb.MakeEffect(collision);
-            GameManager.instance.playerOrb.MakeSound();
+            GameManager.instance.player.MakeEffect(collision);
+            GameManager.instance.player.MakeSound();
         }
-    }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        timer = 0;
+        
 
         if (collision.gameObject.CompareTag("Player"))
         {
+            timer = 0;
             GameManager.instance.player.nowHp -= damage;
-
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         timer += Time.deltaTime;
 
@@ -61,15 +59,16 @@ public class Boss : MonoBehaviour
             }
         }
     }
+    
     void Move()
     {
         if (transform.position.y > 10)
         {
-            transform.position += Vector3.down * Time.deltaTime * speed * 2f;
+            transform.position += Vector3.down * Time.deltaTime * speed * 3f;
         }
         else
         {
-            transform.position += Vector3.right * Time.deltaTime * speed * moveDirec;
+            transform.position += Vector3.right * Time.deltaTime * speed * 2f * moveDirec;
             if (transform.position.x > 10) moveDirec = -1;
             else if (transform.position.x < -10) moveDirec = 1;
 
@@ -81,8 +80,8 @@ public class Boss : MonoBehaviour
         {
             if (gameObject.name == "Boss4")
             {
-                gameObject.SetActive(false);
                 GameManager.instance.GameClear();
+                gameObject.SetActive(false);
             }
 
             SoundManager.instance.SFXPlay("BossDie", bossDieSound, 1.0f);

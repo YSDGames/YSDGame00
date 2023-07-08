@@ -63,12 +63,13 @@ public class Enemy : MonoBehaviour
         if (collision.CompareTag("Bullet"))
         {
             bullets bullet = collision.gameObject.GetComponent<bullets>();
+            //Item Orb = GameObject.Find("UI/LevelUp/Panel/Items").GetComponentsInChildren<Item>()[6];
 
             hp -= bullet.totalDamage;
 
             bullet.totalPiercingNum -= 1;
-            GameManager.instance.playerOrb.MakeEffect(collision);
-            GameManager.instance.playerOrb.MakeSound();
+            GameManager.instance.player.MakeEffect(collision);
+            GameManager.instance.player.MakeSound();
 
             if (hp <= 0)
             {
@@ -79,6 +80,11 @@ public class Enemy : MonoBehaviour
                 spriter.sortingOrder = -1;
 
                 SoundManager.instance.SFXPlay("EnemyDie", enemyDieSound, 2f);
+            }
+            else
+            {
+                Vector3 dir = GameManager.instance.player.transform.position - transform.position;
+                transform.position -= dir.normalized*0.1f;
             }
         }
     }
@@ -121,7 +127,7 @@ public class Enemy : MonoBehaviour
 
     void GoToPlayer()
     {
-
+        //거리 1보다 멀면 player쪽으로 향해서가고 1보다 가까워지면 그냥 앞으로쭉.
         if ((transform.position.y - GameManager.instance.player.gameObject.transform.position.y) > 1f)
         {
             dirVec = Vector3.Normalize(GameManager.instance.player.gameObject.transform.position - transform.position);
@@ -137,7 +143,7 @@ public class Enemy : MonoBehaviour
         float distanceFroemCameraX = Mathf.Abs(transform.position.x - GameManager.instance.mainCamera.transform.position.x);
         float distanceFroemCameraY = Mathf.Abs(transform.position.y - GameManager.instance.mainCamera.transform.position.y);
 
-        if (distanceFroemCameraX > 6 || distanceFroemCameraY > 8)
+        if (distanceFroemCameraX > 6 || distanceFroemCameraY > 7)
         {
             speed = 5 * mainSpeed;
         }
