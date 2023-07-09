@@ -112,6 +112,7 @@ public class Spawner : MonoBehaviour
             if (timer > 3f)
             {
                 Spawn((int)MonsterName.Lv3, "center");
+                Spawn((int)MonsterName.Lv3, "center");
                 Spawn((int)MonsterName.Lv2, "all");
                 Spawn((int)MonsterName.Lv2, "all");
                 Spawn((int)MonsterName.Lv2, "all");
@@ -154,6 +155,7 @@ public class Spawner : MonoBehaviour
                 Spawn((int)MonsterName.Lv3, "center");
                 Spawn((int)MonsterName.Lv1, "right");
                 Spawn((int)MonsterName.Lv2, "center");
+                Spawn((int)MonsterName.Lv2, "center");
                 Spawn((int)MonsterName.Lv1, "left");
                 timer = 0;
             }
@@ -164,6 +166,7 @@ public class Spawner : MonoBehaviour
         {
             if (timer > 1f)
             {
+                Spawn((int)MonsterName.Lv2, "all");
                 Spawn((int)MonsterName.Lv2, "all");
                 Spawn((int)MonsterName.Lv0, "center");
 
@@ -191,18 +194,44 @@ public class Spawner : MonoBehaviour
         {
             if (timer > 1f)
             {
+                Spawn((int)MonsterName.Lv2, "all");
                 Spawn((int)MonsterName.Lv1, "all");
+                Spawn((int)MonsterName.Lv0, "all");
                 Spawn((int)MonsterName.Lv0, "all");
                 timer = 0;
             }
 
             
         }
+        else if (GameManager.instance.GetTime() > 60 + 30)
+        {
+            if (timer > 1f)
+            {
+                Spawn((int)MonsterName.Lv2, "all");
+                Spawn((int)MonsterName.Lv1, "all");
+                Spawn((int)MonsterName.Lv0, "all");
+                timer = 0;
+            }
+
+            if (!trigger1)
+            {
+                Spawn((int)MonsterName.Lv6, "right");
+                Spawn((int)MonsterName.Lv6, "right");
+                Spawn((int)MonsterName.Lv6, "right");
+                Spawn((int)MonsterName.Lv6, "right");
+                Spawn((int)MonsterName.Lv6, "right");
+                Spawn((int)MonsterName.Lv6, "right");
+
+                trigger1 = true;
+            }
+        }
+
         else if (GameManager.instance.GetTime() > 60)
         {
             if (timer > 1.5)
             {
                 Spawn((int)MonsterName.Lv1, "right");
+                Spawn((int)MonsterName.Lv0, "left");
                 Spawn((int)MonsterName.Lv0, "left");
                 timer = 0;
             }
@@ -210,6 +239,7 @@ public class Spawner : MonoBehaviour
             //=====================================================한번소환
             if (trigger1)
             {
+                Spawn((int)MonsterName.Lv6, "left");
                 Spawn((int)MonsterName.Lv6, "left");
                 Spawn((int)MonsterName.Lv6, "left");
                 Spawn((int)MonsterName.Lv6, "left");

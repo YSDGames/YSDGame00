@@ -67,23 +67,5 @@ public class Player : MonoBehaviour
         if (transform.position.x > mapMaxX - 0.5f) transform.position = new Vector3(mapMaxX - 0.5f, transform.position.y, 0f);
         if (transform.position.x < -mapMaxX + 0.5f) transform.position = new Vector3(-mapMaxX + 0.5f, transform.position.y, 0f);
     }
-    public void MakeSound()
-    {
-        SoundManager.instance.SFXPlay("Hit", GameManager.instance.playerOrb.clip, 0.4f);
-        
-    }
-
-    public void MakeEffect(Collider2D collposition)
-    {
-        StartCoroutine(GetEffect(collposition));
-    }
-
-    IEnumerator GetEffect(Collider2D collposition)
-    {
-        GameObject _effect = GameManager.instance.effectPool.GetPool(GameManager.instance.playerOrb.effID, collposition.transform.position, GameManager.instance.playerOrb.data.effect.transform.rotation);
-        yield return new WaitForSeconds(1.5f);
-
-        if (_effect != null)
-            _effect.SetActive(false);
-    }
+    
 }

@@ -33,8 +33,8 @@ public class Boss : MonoBehaviour
             hp -= bullet.totalDamage;
 
             bullet.totalPiercingNum -= 1;
-            GameManager.instance.player.MakeEffect(collision);
-            GameManager.instance.player.MakeSound();
+            GameManager.instance.MakeEffect(collision);
+            GameManager.instance.MakeSound();
         }
 
         

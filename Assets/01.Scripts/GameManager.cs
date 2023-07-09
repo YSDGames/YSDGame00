@@ -17,22 +17,24 @@ public class GameManager : MonoBehaviour
     public PoolManager ballPool;
 
     public GameObject gameStart;
+    public GameObject mainCamera;
     public Item playerOrb;
     public Player player;
-    public GameObject mainCamera;
-    public Transform expBar;
+    public int playerLevel;
     public GameObject dieUI;
     public GameObject clearUI;
     public LevelUp uiLevelUp;
 
     public Vector3 bossPosition;
-    public int playerLevel;
+
     public float exp;
+    List<int> expOfLevel;
+    public RectTransform expBar;
+    float expBarWidth;
 
     float timer;
     float endTime = 12 * 60 + 1;
     public int shootType;
-    List<int> expOfLevel;
 
     [SerializeField] Text time;
     [SerializeField] Text level;
@@ -40,6 +42,7 @@ public class GameManager : MonoBehaviour
     public GameState gameState;
     public enum GameState
     {
+        menu,
         ing,
         stay
     }
@@ -49,17 +52,20 @@ public class GameManager : MonoBehaviour
         timer = 0;
         exp = 0;
         shootType = 0;
+        expBarWidth = 2285;
     }
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+          // DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
+
 
         expOfLevel = new List<int>()
         {
@@ -100,7 +106,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (gameState == GameState.stay)
+        if (gameState != GameState.ing)
             return;
         // 타이머, 레벨s
         timer += Time.deltaTime;
@@ -120,7 +126,7 @@ public class GameManager : MonoBehaviour
 
     void LevelUp()
     {
-        // 경험치, 경험치바
+        // 경험치
         if (exp >= expOfLevel[playerLevel])
         {
             exp -= expOfLevel[playerLevel];
@@ -135,11 +141,12 @@ public class GameManager : MonoBehaviour
             playerLevel -= 1;
         }
 
-        //최대레벨 도달시 exp 0으로 고정, 아니면 경험치획득 표현
+        //경험치바. 최대레벨 도달시 exp 0으로 고정, 아니면 경험치획득 표현
         if (playerLevel == expOfLevel.Count - 1)
-            expBar.gameObject.GetComponent<Transform>().localScale = new Vector3(0, 1, 1);
+            expBar.offsetMax = new Vector2(-expBarWidth, expBar.offsetMax.y);
         else
-            expBar.gameObject.GetComponent<Transform>().localScale = new Vector3(exp / expOfLevel[playerLevel], 1, 1);
+            expBar.offsetMax = new Vector2(-expBarWidth * (1 - exp / expOfLevel[playerLevel]), expBar.offsetMax.y);
+        //expBar.localScale = new Vector3(exp / expOfLevel[playerLevel], 1, 1);
 
     }
     public float GetTime()
@@ -192,5 +199,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void MakeSound()
+    {
+        SoundManager.instance.SFXPlay("Hit", GameManager.instance.playerOrb.clip, 0.4f);
+
+    }
+
+    public void MakeEffect(Collider2D collposition)
+    {
+        StartCoroutine(GetEffect(collposition));
+    }
+
+    IEnumerator GetEffect(Collider2D collposition)
+    {
+        GameObject _effect = GameManager.instance.effectPool.GetPool(GameManager.instance.playerOrb.effID, collposition.transform.position, GameManager.instance.playerOrb.data.effect.transform.rotation);
+        yield return new WaitForSeconds(1.5f);
+
+        if (_effect != null)
+            _effect.SetActive(false);
+    }
 
 }

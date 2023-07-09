@@ -8,8 +8,14 @@ public class StartSelect : MonoBehaviour
     bool trigger = true;
     
     public StartSelect selectOrb;
+
+    private void Start()
+    {
+    }
     public void Stright()
     {
+        SoundManager.instance.SFXPlay("Click", SoundManager.instance.Clip[1], 0.7f);
+
         GameManager.instance.shootType = 0;
 
         selectOrb.gameObject.SetActive(true);
@@ -17,6 +23,8 @@ public class StartSelect : MonoBehaviour
     }
     public void Spread()
     {
+        SoundManager.instance.SFXPlay("Click", SoundManager.instance.Clip[1], 0.7f);
+
         GameManager.instance.shootType = 1;
 
         selectOrb.gameObject.SetActive(true);
@@ -25,6 +33,8 @@ public class StartSelect : MonoBehaviour
     }
     public void Rotate()
     {
+        SoundManager.instance.SFXPlay("Click", SoundManager.instance.Clip[1], 0.7f);
+
         GameManager.instance.shootType = 2;
 
         selectOrb.gameObject.SetActive(true);
@@ -34,15 +44,17 @@ public class StartSelect : MonoBehaviour
 
     public void SelectOrb() 
     {
+        SoundManager.instance.SFXPlay("Click", SoundManager.instance.Clip[1], 0.7f);
+
         if (trigger)
         {
+            trigger = false;
+
             GameManager.instance.playerOrb = GetComponent<Item>();
 
             transform.parent = GameObject.Find("UI/LevelUp/Panel/Items").transform;
             transform.localScale = Vector3.one * 0.9f;
-            gameObject.SetActive(false);
 
-            trigger = false;
             GameManager.instance.gameState = GameManager.GameState.ing;
             Time.timeScale = 1f;
 

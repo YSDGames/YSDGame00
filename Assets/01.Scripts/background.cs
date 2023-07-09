@@ -5,7 +5,8 @@ using UnityEngine;
 public class background : MonoBehaviour
 {
     [SerializeField]
-    private float moveSpeed = 3f;
+    public float moveSpeed = 3f;
+    public float moveRightSpeed = 0f;
 
     float startPositionY;
     [SerializeField] float endPositionY = 19f;
@@ -19,6 +20,17 @@ public class background : MonoBehaviour
     {
         switch (gameObject.transform.tag)
         {
+            case "MenuBG":
+                transform.position += Vector3.down * Time.deltaTime* moveSpeed + Vector3.right * Time.deltaTime * moveRightSpeed;
+                if (transform.position.y < -10.2f)
+                {
+                    transform.position = new Vector3(transform.position.x, 10.2f, transform.position.z);
+                }
+                if (Mathf.Abs(transform.position.x) > 8f)
+                {
+                    transform.position = new Vector3(-(transform.position.x-1), transform.position.y, transform.position.z);
+                }
+                break;
             case "BackGround":
 
                 transform.position += Vector3.down * moveSpeed * Time.deltaTime;

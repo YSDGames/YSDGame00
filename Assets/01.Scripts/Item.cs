@@ -77,6 +77,8 @@ public class Item : MonoBehaviour
 
     public void OnClick()
     {
+        SoundManager.instance.SFXPlay("Click", SoundManager.instance.Clip[1], 0.7f);
+
         switch (data.itemType)
         {
             case ItemData.ItemType.Orb:

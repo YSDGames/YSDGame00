@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb202ed67343524585b05375f3efb12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 25
+  maxHp: 30
   hp: 0
   enemyDieSound: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
   damage: 3

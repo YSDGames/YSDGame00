@@ -9,7 +9,8 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance;
 
     public AudioSource bgSound;
-    public AudioClip bgClip;
+    public AudioClip[] bgClip;
+    public AudioClip[] Clip;
 
     private void Awake()
     {
@@ -27,9 +28,12 @@ public class SoundManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        BgSoundPlay(bgClip);
+        for (int i = 0; i < bgClip.Length; i++) 
+        {
+            if(arg0.name == bgClip[i].name)
+                BgSoundPlay(bgClip[i]);
+        }
     }
-
     public void SFXPlay(string str, AudioClip clip , float volume)
     {
         GameObject go = new GameObject(str + "Sound");
