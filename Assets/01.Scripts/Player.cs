@@ -1,5 +1,7 @@
 
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class Player : MonoBehaviour
 {
@@ -32,8 +34,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TouchMove();
-        KeyBoardMove();
+        if (GameManager.instance.gameState != GameManager.GameState.ing)
+            return;
+        //TouchMove();
+        //KeyBoardMove();
+        InputMove();
         HpUpdate();
         Dead();
     }
@@ -59,6 +64,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    void InputMove()
+    {
+        transform.Translate(inputVec * Time.deltaTime * _speed);
+
+        if (transform.position.y < mapMinY) transform.position = new Vector3(transform.position.x, mapMinY, 0f);
+        if (transform.position.y > mapMaxY - 0.5f) transform.position = new Vector3(transform.position.x, mapMaxY - 0.5f, 0f);
+        if (transform.position.x > mapMaxX - 0.5f) transform.position = new Vector3(mapMaxX - 0.5f, transform.position.y, 0f);
+        if (transform.position.x < -mapMaxX + 0.5f) transform.position = new Vector3(-mapMaxX + 0.5f, transform.position.y, 0f);
+    }
     void KeyBoardMove()
     {
         float x = Input.GetAxisRaw("Horizontal");
@@ -119,8 +133,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    //void OnMove(InputValue value)
-    //{
-    //    inputVec = value.Get<Vector2>();
-    //}
+    void OnNewaction(InputValue value)
+    {
+        inputVec = value.Get<Vector2>();
+    }
 }
