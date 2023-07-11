@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.XR;
 
 public class Player : MonoBehaviour
 {
@@ -18,9 +16,10 @@ public class Player : MonoBehaviour
     float mapMinY = -4.6f;
     float mapMaxX = 15.3f;
 
-    
+    Vector2 startTouch;
+    Vector2 dragTouch;
 
-    private Vector3 inputVec;
+    private Vector2 inputVec;
     // Start is called before the first frame update
     void Awake()
     {
@@ -33,9 +32,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+        TouchMove();
+        KeyBoardMove();
         HpUpdate();
         Dead();
+    }
+
+    private void FixedUpdate()
+    {
+
     }
 
     void HpUpdate()
@@ -48,24 +53,74 @@ public class Player : MonoBehaviour
     {
         if (nowHp <= 0)
         {
+            SoundManager.instance.DieSound();
             gameObject.SetActive(false);
             GameManager.instance.GameOver();
         }
     }
 
-    void Move()
+    void KeyBoardMove()
     {
-        inputVec.x = Input.GetAxis("Horizontal");
-        inputVec.y = Input.GetAxis("Vertical");
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
 
-        inputVec = inputVec.magnitude > 1 ? inputVec.normalized : inputVec;
-
-        transform.Translate(inputVec * _speed * Time.deltaTime);
+        inputVec = new Vector2(x, y);
+        transform.Translate(inputVec.normalized * Time.deltaTime * _speed);
 
         if (transform.position.y < mapMinY) transform.position = new Vector3(transform.position.x, mapMinY, 0f);
         if (transform.position.y > mapMaxY - 0.5f) transform.position = new Vector3(transform.position.x, mapMaxY - 0.5f, 0f);
         if (transform.position.x > mapMaxX - 0.5f) transform.position = new Vector3(mapMaxX - 0.5f, transform.position.y, 0f);
         if (transform.position.x < -mapMaxX + 0.5f) transform.position = new Vector3(-mapMaxX + 0.5f, transform.position.y, 0f);
     }
-    
+
+       // =======================마우스drag TEST용========================   
+
+    //private void OnMouseDown()
+    //{
+    //    startTouch = Input.mousePosition;
+    //}
+
+    //private void OnMouseDrag()
+    //{
+    //    Vector3 vec = new Vector3(Input.mousePosition.x - startTouch.x, Input.mousePosition.y - startTouch.y, 0f);
+
+    //    transform.Translate(vec.normalized * Mathf.Clamp(vec.magnitude/1000, -1, 1) * Time.deltaTime * _speed);
+    //    //transform.Translate(vec * Time.deltaTime * 0.005f);
+
+    //}
+    void TouchMove()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+
+            switch (touch.phase)
+            {
+                case UnityEngine.TouchPhase.Began:
+                    startTouch = touch.position;
+                    break;
+                case UnityEngine.TouchPhase.Moved:
+                    dragTouch = touch.position;
+
+                    inputVec = dragTouch - startTouch;
+                    //transform.Translate(inputVec * Time.deltaTime * _speed);
+                    transform.Translate(inputVec.normalized * Mathf.Clamp(inputVec.magnitude / 1000, -1, 1) * Time.deltaTime * _speed);
+
+
+                    if (transform.position.y < mapMinY) transform.position = new Vector3(transform.position.x, mapMinY, 0f);
+                    if (transform.position.y > mapMaxY - 0.5f) transform.position = new Vector3(transform.position.x, mapMaxY - 0.5f, 0f);
+                    if (transform.position.x > mapMaxX - 0.5f) transform.position = new Vector3(mapMaxX - 0.5f, transform.position.y, 0f);
+                    if (transform.position.x < -mapMaxX + 0.5f) transform.position = new Vector3(-mapMaxX + 0.5f, transform.position.y, 0f);
+                    break;
+
+            }
+
+        }
+    }
+
+    //void OnMove(InputValue value)
+    //{
+    //    inputVec = value.Get<Vector2>();
+    //}
 }

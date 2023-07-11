@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -59,13 +57,14 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-          // DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
 
+        Application.targetFrameRate = 60;
 
         expOfLevel = new List<int>()
         {
@@ -108,6 +107,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameState != GameState.ing)
             return;
+
         // 타이머, 레벨s
         timer += Time.deltaTime;
         time.text = $"{(int)(endTime - timer) / 60:D2}:{(int)(endTime - timer) % 60:D2}";
@@ -123,7 +123,6 @@ public class GameManager : MonoBehaviour
         LevelUp();
         GetBossDir();
     }
-
     void LevelUp()
     {
         // 경험치

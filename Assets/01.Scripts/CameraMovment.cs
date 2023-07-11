@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 public class CameraMovment : MonoBehaviour
@@ -29,7 +28,7 @@ public class CameraMovment : MonoBehaviour
 
     }
 
-    void Update()
+    void LateUpdate()
     {
         hight = Camera.main.orthographicSize;  //카메라 높이의 1/2
         width = hight * Screen.width / Screen.height;
@@ -47,13 +46,13 @@ public class CameraMovment : MonoBehaviour
         difY = transform.position.y - player.transform.position.y;
 
         // 왼쪽
-        if (difX > width / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(player.transform.position.x - width / 3, transform.position.y, transform.position.z), 0.01f);
+        if (difX > width / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(player.transform.position.x - width / 3, transform.position.y, transform.position.z), Time.deltaTime);
         // 오른쪽
-        if (difX < -width / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(player.transform.position.x + width / 3, transform.position.y, transform.position.z), 0.01f);
+        if (difX < -width / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(player.transform.position.x + width / 3, transform.position.y, transform.position.z), Time.deltaTime);
         // 아래방향
-        if (difY > hight * 2 / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, player.transform.position.y + hight * 2 / 3, transform.position.z), 0.03f);
+        if (difY > hight * 2 / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, player.transform.position.y + hight*2 / 3, transform.position.z), Time.deltaTime*3);
         // 위방향
-        if (difY < -hight / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, player.transform.position.y - hight / 3, transform.position.z), 0.03f);
+        if (difY < -hight / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, player.transform.position.y - hight/ 3, transform.position.z), Time.deltaTime*2);
 
 
         // transform.position = Vector3.Lerp(transform.position, player.transform.position, 0.05f);

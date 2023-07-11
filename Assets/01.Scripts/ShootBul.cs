@@ -37,7 +37,13 @@ public class ShootBul : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.instance.gameState != GameManager.GameState.ing)
+            return;
+
         skillTimer -= Time.deltaTime;
+        skillTimer = skillTimer <= 0 ? 0 : skillTimer;
+        skillCoolDown.fillAmount = skillTimer / skillCoolTime;
+
         timer += Time.deltaTime;
         //SetShooting();
         if (timer > shootSpeed)
@@ -56,14 +62,16 @@ public class ShootBul : MonoBehaviour
             }
             timer = 0;
         }
-        //===========================skill========================================//
-        if (Input.GetKeyDown(KeyCode.X) && skillTimer <= 0)
-        {
+    }
 
+    public void ActiveSkill()
+    {
+        if (skillTimer <= 0)
+        {
             switch (GameManager.instance.shootType)
             {
                 case 0:
-                    SkillStright(100 ,15);            //*1배
+                    SkillStright(100, 15);            //*1배
                     break;
                 case 1:
                     StartCoroutine(SkillSpread(30, 0.05f)); // * bullNum * 30배
@@ -73,14 +81,9 @@ public class ShootBul : MonoBehaviour
                     SkillRotate(40, 0.05f);  // * 3 *40 배  20,0.1  40,0.05
                     break;
             }
-
             skillTimer = skillCoolTime;
         }
-
-        skillCoolDown.fillAmount = skillTimer / skillCoolTime;
-
     }
-
     void UpdateStat(GameObject b)
     {
         bullets bullet = b.GetComponent<bullets>();

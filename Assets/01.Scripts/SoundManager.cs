@@ -28,13 +28,13 @@ public class SoundManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        for (int i = 0; i < bgClip.Length; i++) 
+        for (int i = 0; i < bgClip.Length; i++)
         {
-            if(arg0.name == bgClip[i].name)
+            if (arg0.name == bgClip[i].name)
                 BgSoundPlay(bgClip[i]);
         }
     }
-    public void SFXPlay(string str, AudioClip clip , float volume)
+    public void SFXPlay(string str, AudioClip clip, float volume)
     {
         GameObject go = new GameObject(str + "Sound");
         go.transform.parent = transform;
@@ -53,5 +53,26 @@ public class SoundManager : MonoBehaviour
         bgSound.loop = true;
         bgSound.volume = 0.5f;
         bgSound.Play();
+    }
+
+    public void ButtonClickSound()
+    {
+        SFXPlay("Click", Clip[1], 0.5f);
+    }
+
+    public void LevelUpSound()
+    {
+        SFXPlay("LevelUp", Clip[2], 0.5f);
+    }
+
+    public void DieSound()
+    {
+        SFXPlay("Die", Clip[3], 0.5f);
+    }
+
+    public void HittedSound()
+    {
+        SFXPlay("Hitted", Clip[4], 0.5f);
+
     }
 }

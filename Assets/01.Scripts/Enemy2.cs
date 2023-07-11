@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Animations;
+
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Enemy2 : MonoBehaviour
 {
@@ -100,6 +96,7 @@ public class Enemy2 : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
+            SoundManager.instance.HittedSound();
             GameManager.instance.player.nowHp -= damage;
         }
     }
@@ -112,6 +109,7 @@ public class Enemy2 : MonoBehaviour
         {
             if (timer > damageInterval)
             {
+                SoundManager.instance.HittedSound();
                 GameManager.instance.player.nowHp -= damage;
                 timer = 0;
             }

@@ -12,6 +12,7 @@ public class background : MonoBehaviour
     [SerializeField] float endPositionY = 19f;
     [SerializeField] float bossNum;
 
+    
     private void Awake()
     {
         startPositionY = transform.position.y;

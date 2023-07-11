@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.U2D.Path;
 using UnityEngine;
 
 public class StartSelect : MonoBehaviour
@@ -14,7 +11,7 @@ public class StartSelect : MonoBehaviour
     }
     public void Stright()
     {
-        SoundManager.instance.SFXPlay("Click", SoundManager.instance.Clip[1], 0.7f);
+        SoundManager.instance.ButtonClickSound();
 
         GameManager.instance.shootType = 0;
 
@@ -23,7 +20,7 @@ public class StartSelect : MonoBehaviour
     }
     public void Spread()
     {
-        SoundManager.instance.SFXPlay("Click", SoundManager.instance.Clip[1], 0.7f);
+        SoundManager.instance.ButtonClickSound();
 
         GameManager.instance.shootType = 1;
 
@@ -33,7 +30,7 @@ public class StartSelect : MonoBehaviour
     }
     public void Rotate()
     {
-        SoundManager.instance.SFXPlay("Click", SoundManager.instance.Clip[1], 0.7f);
+        SoundManager.instance.ButtonClickSound();
 
         GameManager.instance.shootType = 2;
 
@@ -44,7 +41,7 @@ public class StartSelect : MonoBehaviour
 
     public void SelectOrb() 
     {
-        SoundManager.instance.SFXPlay("Click", SoundManager.instance.Clip[1], 0.7f);
+        SoundManager.instance.ButtonClickSound();
 
         if (trigger)
         {
@@ -52,12 +49,12 @@ public class StartSelect : MonoBehaviour
 
             GameManager.instance.playerOrb = GetComponent<Item>();
 
-            transform.parent = GameObject.Find("UI/LevelUp/Panel/Items").transform;
+            transform.SetParent(GameObject.Find("UI/LevelUp/Panel/Items").transform);
             transform.localScale = Vector3.one * 0.9f;
 
             GameManager.instance.gameState = GameManager.GameState.ing;
+           
             Time.timeScale = 1f;
-
             selectOrb.gameObject.transform.parent.gameObject.SetActive(false);
         }
     }

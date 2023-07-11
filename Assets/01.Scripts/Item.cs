@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -77,7 +76,7 @@ public class Item : MonoBehaviour
 
     public void OnClick()
     {
-        SoundManager.instance.SFXPlay("Click", SoundManager.instance.Clip[1], 0.7f);
+        SoundManager.instance.ButtonClickSound();
 
         switch (data.itemType)
         {
@@ -131,6 +130,4 @@ public class Item : MonoBehaviour
             transform.parent = GameObject.Find("UI/FullLevel").transform;
         }
     }
-
-
 }

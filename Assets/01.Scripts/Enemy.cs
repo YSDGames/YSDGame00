@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : MonoBehaviour
 {
@@ -20,17 +15,21 @@ public class Enemy : MonoBehaviour
     public float damage = 1f;
     public float speed = 1f;
     float mainSpeed;
-    bool isLive = true;
+    bool isLive;
     public float exp = 1f;
 
-    float damageInterval = 1f;
-    float timer = 0;
+    float damageInterval;
+    float timer;
 
     Vector3 dirVec;
 
 
     void Awake()
     {
+        damageInterval = 1f;
+        timer = 0;
+        isLive = true;
+
         mainSpeed = speed;
         aniControl = gameObject.GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
@@ -95,6 +94,7 @@ public class Enemy : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
+            SoundManager.instance.HittedSound();
             GameManager.instance.player.nowHp -= damage;
         }
     }
@@ -107,6 +107,7 @@ public class Enemy : MonoBehaviour
         {
             if (timer > damageInterval)
             {
+                SoundManager.instance.HittedSound();
                 GameManager.instance.player.nowHp -= damage;
                 timer = 0;
             }
