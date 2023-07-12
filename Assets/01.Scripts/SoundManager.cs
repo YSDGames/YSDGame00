@@ -12,6 +12,16 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] bgClip;
     public AudioClip[] Clip;
 
+    public enum UISound
+    { 
+        menuClick,
+        itemSelect,
+        levelUp,
+        die,
+        hitted
+    }
+
+
     private void Awake()
     {
         if (instance == null)
@@ -24,6 +34,8 @@ public class SoundManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        PlayerPrefs.SetFloat("GameVolum", 1f);
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -55,24 +67,8 @@ public class SoundManager : MonoBehaviour
         bgSound.Play();
     }
 
-    public void ButtonClickSound()
+    public void UISounds(UISound sound)
     {
-        SFXPlay("Click", Clip[1], 0.5f);
-    }
-
-    public void LevelUpSound()
-    {
-        SFXPlay("LevelUp", Clip[2], 0.5f);
-    }
-
-    public void DieSound()
-    {
-        SFXPlay("Die", Clip[3], 0.5f);
-    }
-
-    public void HittedSound()
-    {
-        SFXPlay("Hitted", Clip[4], 0.5f);
-
+        SFXPlay(sound.ToString(), Clip[(int)sound], 0.5f);
     }
 }

@@ -41,7 +41,7 @@ public class Boss : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             timer = 0;
-            SoundManager.instance.HittedSound();
+            SoundManager.instance.UISounds(SoundManager.UISound.hitted);
             GameManager.instance.player.nowHp -= damage;
         }
     }
@@ -54,7 +54,7 @@ public class Boss : MonoBehaviour
         {
             if (timer > damageInterval)
             {
-                SoundManager.instance.HittedSound();
+                SoundManager.instance.UISounds(SoundManager.UISound.hitted);
                 GameManager.instance.player.nowHp -= damage;
                 timer = 0;
             }

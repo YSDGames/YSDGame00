@@ -96,7 +96,7 @@ public class Enemy2 : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            SoundManager.instance.HittedSound();
+            SoundManager.instance.UISounds(SoundManager.UISound.hitted);
             GameManager.instance.player.nowHp -= damage;
         }
     }
@@ -109,7 +109,7 @@ public class Enemy2 : MonoBehaviour
         {
             if (timer > damageInterval)
             {
-                SoundManager.instance.HittedSound();
+                SoundManager.instance.UISounds(SoundManager.UISound.hitted);
                 GameManager.instance.player.nowHp -= damage;
                 timer = 0;
             }

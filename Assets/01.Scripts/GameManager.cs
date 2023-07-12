@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -22,6 +23,9 @@ public class GameManager : MonoBehaviour
     public GameObject dieUI;
     public GameObject clearUI;
     public LevelUp uiLevelUp;
+    public bool gamePadMode = true;
+    public GameObject joyStick;
+    public GameObject moveGuide;
 
     public Vector3 bossPosition;
 
@@ -101,10 +105,12 @@ public class GameManager : MonoBehaviour
     {
         Init();
         GameStart();
+        GamePadMode(PlayerPrefs.GetInt("ControlMode"));
     }
 
     void Update()
     {
+
         if (gameState != GameState.ing)
             return;
 
@@ -122,6 +128,21 @@ public class GameManager : MonoBehaviour
         }
         LevelUp();
         GetBossDir();
+
+    }
+
+    void GamePadMode(int mode)
+    {
+        if (mode == 0)
+        {
+            joyStick.SetActive(true);
+            moveGuide.SetActive(false);
+        }
+        else
+        {
+            joyStick.SetActive(false);
+            moveGuide.SetActive(true);
+        }
     }
     void LevelUp()
     {
@@ -200,7 +221,7 @@ public class GameManager : MonoBehaviour
 
     public void MakeSound()
     {
-        SoundManager.instance.SFXPlay("Hit", GameManager.instance.playerOrb.clip, 0.4f);
+        SoundManager.instance.SFXPlay("Hit", playerOrb.clip, 0.4f);
 
     }
 
@@ -211,7 +232,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator GetEffect(Collider2D collposition)
     {
-        GameObject _effect = GameManager.instance.effectPool.GetPool(GameManager.instance.playerOrb.effID, collposition.transform.position, GameManager.instance.playerOrb.data.effect.transform.rotation);
+        GameObject _effect = effectPool.GetPool(playerOrb.effID, collposition.transform.position, playerOrb.data.effect.transform.rotation);
         yield return new WaitForSeconds(1.5f);
 
         if (_effect != null)

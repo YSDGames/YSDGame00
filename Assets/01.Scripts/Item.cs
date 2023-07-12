@@ -76,7 +76,8 @@ public class Item : MonoBehaviour
 
     public void OnClick()
     {
-        SoundManager.instance.ButtonClickSound();
+        SoundManager.instance.UISounds(SoundManager.UISound.itemSelect);
+
 
         switch (data.itemType)
         {

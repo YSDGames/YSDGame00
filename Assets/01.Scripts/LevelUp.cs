@@ -12,7 +12,7 @@ public class LevelUp : MonoBehaviour
     }
     public void Show()
     {
-        SoundManager.instance.LevelUpSound();
+        SoundManager.instance.UISounds(SoundManager.UISound.levelUp);
 
         NextSelect();
         rect.transform.localScale = Vector3.one;

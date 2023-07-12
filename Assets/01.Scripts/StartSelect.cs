@@ -11,7 +11,8 @@ public class StartSelect : MonoBehaviour
     }
     public void Stright()
     {
-        SoundManager.instance.ButtonClickSound();
+        SoundManager.instance.UISounds(SoundManager.UISound.itemSelect);
+
 
         GameManager.instance.shootType = 0;
 
@@ -20,7 +21,8 @@ public class StartSelect : MonoBehaviour
     }
     public void Spread()
     {
-        SoundManager.instance.ButtonClickSound();
+        SoundManager.instance.UISounds(SoundManager.UISound.itemSelect);
+
 
         GameManager.instance.shootType = 1;
 
@@ -30,7 +32,8 @@ public class StartSelect : MonoBehaviour
     }
     public void Rotate()
     {
-        SoundManager.instance.ButtonClickSound();
+        SoundManager.instance.UISounds(SoundManager.UISound.itemSelect);
+
 
         GameManager.instance.shootType = 2;
 
@@ -41,7 +44,8 @@ public class StartSelect : MonoBehaviour
 
     public void SelectOrb() 
     {
-        SoundManager.instance.ButtonClickSound();
+        SoundManager.instance.UISounds(SoundManager.UISound.itemSelect);
+
 
         if (trigger)
         {

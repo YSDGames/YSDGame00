@@ -38,7 +38,8 @@ public class Player : MonoBehaviour
             return;
         //TouchMove();
         //KeyBoardMove();
-        InputMove();
+        //TouchMove();
+        //InputMove();
         HpUpdate();
         Dead();
     }
@@ -58,7 +59,7 @@ public class Player : MonoBehaviour
     {
         if (nowHp <= 0)
         {
-            SoundManager.instance.DieSound();
+            SoundManager.instance.UISounds(SoundManager.UISound.die);
             gameObject.SetActive(false);
             GameManager.instance.GameOver();
         }
@@ -87,21 +88,21 @@ public class Player : MonoBehaviour
         if (transform.position.x < -mapMaxX + 0.5f) transform.position = new Vector3(-mapMaxX + 0.5f, transform.position.y, 0f);
     }
 
-       // =======================마우스drag TEST용========================   
+    // =======================마우스drag TEST용========================   
 
-    //private void OnMouseDown()
-    //{
-    //    startTouch = Input.mousePosition;
-    //}
+    private void OnMouseDown()
+    {
+        startTouch = Input.mousePosition;
+    }
 
-    //private void OnMouseDrag()
-    //{
-    //    Vector3 vec = new Vector3(Input.mousePosition.x - startTouch.x, Input.mousePosition.y - startTouch.y, 0f);
+    private void OnMouseDrag()
+    {
+        Vector3 vec = new Vector3(Input.mousePosition.x - startTouch.x, Input.mousePosition.y - startTouch.y, 0f);
 
-    //    transform.Translate(vec.normalized * Mathf.Clamp(vec.magnitude/1000, -1, 1) * Time.deltaTime * _speed);
-    //    //transform.Translate(vec * Time.deltaTime * 0.005f);
+        transform.Translate(vec.normalized * Mathf.Clamp(vec.magnitude / 1000, -1, 1) * Time.deltaTime * _speed);
+        //transform.Translate(vec * Time.deltaTime * 0.005f);
 
-    //}
+    }
     void TouchMove()
     {
         if (Input.touchCount > 0)
