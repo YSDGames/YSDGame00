@@ -18,7 +18,8 @@ public class SoundManager : MonoBehaviour
         itemSelect,
         levelUp,
         die,
-        hitted
+        hitted,
+        healSound
     }
 
 

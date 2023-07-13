@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,8 +16,10 @@ public class ShootBul : MonoBehaviour
     public float baseShootSpeed;
     public float shootSpeed;
     float timer;
-    float skillTimer;
-    float skillCoolTime;
+
+    [SerializeField] Text txtCoolTime;
+    public float skillTimer;
+    public float skillCoolTime;
     public int numBullets;
     public int bulltype;
 
@@ -40,9 +43,7 @@ public class ShootBul : MonoBehaviour
         if (GameManager.instance.gameState != GameManager.GameState.ing)
             return;
 
-        skillTimer -= Time.deltaTime;
-        skillTimer = skillTimer <= 0 ? 0 : skillTimer;
-        skillCoolDown.fillAmount = skillTimer / skillCoolTime;
+        SkillCoolTime();
 
         timer += Time.deltaTime;
         //SetShooting();
@@ -63,7 +64,17 @@ public class ShootBul : MonoBehaviour
             timer = 0;
         }
     }
+    public void SkillCoolTime()
+    {
+        if (skillTimer <= 0) txtCoolTime.text = "";
+        else if (skillTimer < 1) txtCoolTime.text = $"{skillTimer:N1}";
+        else txtCoolTime.text = $"{(int)skillTimer}";
 
+        skillTimer -= Time.deltaTime;
+        skillTimer = skillTimer <= 0 ? 0 : skillTimer;
+
+        skillCoolDown.fillAmount = skillTimer / skillCoolTime;
+    }
     public void ActiveSkill()
     {
         if (skillTimer <= 0)
@@ -166,7 +177,7 @@ public class ShootBul : MonoBehaviour
 
         UpdateStat(b);
         b.transform.localScale = Vector3.one * scale;
-        
+
         //b.GetComponentInChildren<ParticleSystem>().startSize = 0.4f * scale;  //왜 안되지
         b.GetComponent<bullets>().totalDamage = b.GetComponent<bullets>().totalDamage * damMulti;
         b.GetComponent<bullets>().totalPiercingNum = -1; // 무한

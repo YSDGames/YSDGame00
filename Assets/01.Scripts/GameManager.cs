@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public int playerLevel;
     public GameObject dieUI;
     public GameObject clearUI;
-    public LevelUp uiLevelUp;
+    public UI_LevelUp uiLevelUp;
     public bool gamePadMode = true;
     public GameObject joyStick;
     public GameObject moveGuide;

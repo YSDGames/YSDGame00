@@ -36,10 +36,10 @@ public class Player : MonoBehaviour
     {
         if (GameManager.instance.gameState != GameManager.GameState.ing)
             return;
-        //TouchMove();
+        if (PlayerPrefs.GetInt("ControlMode") == 1) TouchMove();
+        else if (PlayerPrefs.GetInt("ControlMode") == 0) InputMove();
         //KeyBoardMove();
-        //TouchMove();
-        //InputMove();
+
         HpUpdate();
         Dead();
     }
@@ -90,43 +90,51 @@ public class Player : MonoBehaviour
 
     // =======================마우스drag TEST용========================   
 
-    private void OnMouseDown()
-    {
-        startTouch = Input.mousePosition;
-    }
 
-    private void OnMouseDrag()
-    {
-        Vector3 vec = new Vector3(Input.mousePosition.x - startTouch.x, Input.mousePosition.y - startTouch.y, 0f);
+    //private void OnMouseDown()
+    //{
+    //    startTouch = Input.mousePosition;
+    //    Debug.Log(startTouch);
+    //    GameManager.instance.moveGuide.transform.position = Camera.main.ScreenToWorldPoint(startTouch) + Vector3.forward * 20;
+    //    Debug.Log(GameManager.instance.moveGuide.transform.position);
 
-        transform.Translate(vec.normalized * Mathf.Clamp(vec.magnitude / 1000, -1, 1) * Time.deltaTime * _speed);
-        //transform.Translate(vec * Time.deltaTime * 0.005f);
 
-    }
+    //}
+
+    //private void OnMouseDrag()
+    //{
+    //    Vector3 vec = new Vector3(Input.mousePosition.x - startTouch.x, Input.mousePosition.y - startTouch.y, 0f);
+
+    //    transform.Translate(vec.normalized * Mathf.Clamp(vec.magnitude / 1000, -0.3f, 0.3f) * Time.deltaTime * 4f * _speed);
+    //    //transform.Translate(vec * Time.deltaTime * 0.005f);
+
+    //}
     void TouchMove()
     {
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
-
             switch (touch.phase)
             {
                 case UnityEngine.TouchPhase.Began:
                     startTouch = touch.position;
+                    GameManager.instance.moveGuide.transform.position = Camera.main.ScreenToWorldPoint(startTouch) + Vector3.forward * 20;
                     break;
                 case UnityEngine.TouchPhase.Moved:
                     dragTouch = touch.position;
 
                     inputVec = dragTouch - startTouch;
                     //transform.Translate(inputVec * Time.deltaTime * _speed);
-                    transform.Translate(inputVec.normalized * Mathf.Clamp(inputVec.magnitude / 1000, -1, 1) * Time.deltaTime * _speed);
-
+                    transform.Translate(inputVec.normalized * Mathf.Clamp(inputVec.magnitude / 1000, -0.3f, 0.3f) * Time.deltaTime * 4f * _speed);
 
                     if (transform.position.y < mapMinY) transform.position = new Vector3(transform.position.x, mapMinY, 0f);
                     if (transform.position.y > mapMaxY - 0.5f) transform.position = new Vector3(transform.position.x, mapMaxY - 0.5f, 0f);
                     if (transform.position.x > mapMaxX - 0.5f) transform.position = new Vector3(mapMaxX - 0.5f, transform.position.y, 0f);
                     if (transform.position.x < -mapMaxX + 0.5f) transform.position = new Vector3(-mapMaxX + 0.5f, transform.position.y, 0f);
+                    break;
+                case UnityEngine.TouchPhase.Canceled:
+                    GameManager.instance.moveGuide.transform.position = new Vector3(100, 100, 0); //안보이는곳으로 보내버려
                     break;
 
             }

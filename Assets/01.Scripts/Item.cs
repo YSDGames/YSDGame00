@@ -37,7 +37,7 @@ public class Item : MonoBehaviour
         textDesc = texts[2];
 
         textName.text = data.itemName;
-
+        level = 0;
     }
 
     private void OnEnable()
@@ -69,6 +69,12 @@ public class Item : MonoBehaviour
             case ItemData.ItemType.Trash:
                 textLevel.text = "";
                 textDesc.text = string.Format(data.itemDesc);
+                break;
+            case ItemData.ItemType.Magnet:
+                textDesc.text = string.Format(data.itemDesc, data.damages[level]*100);
+                break;
+            case ItemData.ItemType.Accelerator:
+                textDesc.text = string.Format(data.itemDesc, data.damages[level]);
                 break;
         }
 
@@ -111,14 +117,19 @@ public class Item : MonoBehaviour
                 if (level <= GameManager.instance.bulletPool.pool.Length - 2)
                     ShootBul.Instance.bulltype++;
 
-
                 if (level == GameManager.instance.bulletPool.pool.Length - 2)
                     gameObject.SetActive(false);
-
                 break;
             case ItemData.ItemType.Trash:
-                GameManager.instance.player.nowHp += 5;
-
+                GameManager.instance.player.maxHp += 10;
+                GameManager.instance.player.nowHp += 10;
+                break;
+            case ItemData.ItemType.Magnet:
+                Ball.magRange *= 1 + data.damages[level];
+                break;
+            case ItemData.ItemType.Accelerator:
+                ShootBul.Instance.skillCoolTime -= 2;
+                ShootBul.Instance.skillTimer -= 2;
                 break;
 
         }
@@ -128,7 +139,7 @@ public class Item : MonoBehaviour
 
         if (level == data.damages.Length)
         {
-            transform.parent = GameObject.Find("UI/FullLevel").transform;
+            transform.SetParent(GameObject.Find("UI/FullLevel").transform);
         }
     }
 }

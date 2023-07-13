@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2490932689047824529}
-  - component: {fileID: 2490932689047824531}
+  - component: {fileID: 7660944705671326542}
   - component: {fileID: 2490932689047824530}
   - component: {fileID: 2490932689047824535}
   - component: {fileID: 2490932689047824528}
@@ -36,7 +36,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2490932689047824531
+--- !u!114 &7660944705671326542
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,12 +45,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2490932689047824748}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68dc3cb4433318640b91ab4ad2c6ae9c, type: 3}
+  m_Script: {fileID: 11500000, guid: 64703bf84aefd474f83a88273d76bba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 300
-  hp: 5
+  hp: 0
   enemyDieSound: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
+  player: {fileID: 0}
   damage: 5
   speed: 1.2
   exp: 15
