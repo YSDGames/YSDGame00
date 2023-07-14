@@ -24,8 +24,10 @@ public class GameManager : MonoBehaviour
     public GameObject clearUI;
     public UI_LevelUp uiLevelUp;
     public bool gamePadMode = true;
-    public GameObject joyStick;
+
     public GameObject moveGuide;
+    public GameObject joyBG;
+    public GameObject joyStick;
 
     public Vector3 bossPosition;
 
@@ -73,29 +75,36 @@ public class GameManager : MonoBehaviour
         expOfLevel = new List<int>()
         {
             0,      //·¾0
-            5,
-            10,
-            20,
-            40,
-            70,      //5
-            90,
+            3,
+            8,
+            15,
+            24,
+            40,      //5
+            60,
+            80,
             110,
             140,
-            170,
-            200,     //10
-            210,
+            180,     //10
             240,
-            270,
-            350,
-            400,     //15
-            450,
-            500,
-            550,
+            300,
+            360,
+            430,
+            500,     //15
             600,
-            700,     //20
-            800,
-            900
-
+            750,
+            900,
+            1100,
+            1300,     //20
+            1600,
+            1900,
+            2400,
+            3000,
+            3600,      //25
+            4200,
+            4800,
+            5400,
+            6000,
+            6600       //30
 
         };
 
@@ -135,12 +144,12 @@ public class GameManager : MonoBehaviour
     {
         if (mode == 0)
         {
-            joyStick.SetActive(true);
+            joyBG.SetActive(true);
             moveGuide.SetActive(false);
         }
         else
         {
-            joyStick.SetActive(false);
+            joyBG.SetActive(false);
             moveGuide.SetActive(true);
         }
     }

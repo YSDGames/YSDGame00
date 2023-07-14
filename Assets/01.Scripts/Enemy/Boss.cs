@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss : MonoBehaviour
+public abstract class Boss : MonoBehaviour
 {
-    public AudioClip bossDieSound;
-
     public float hp = 100;
     [SerializeField] float damage = 5;
     [SerializeField] float speed = 1f;
@@ -14,14 +12,34 @@ public class Boss : MonoBehaviour
 
     float timer;
     float damageInterval = 1f;
+
+    [SerializeField] protected GameObject skillArea;
+    [SerializeField] protected float skillCool;
+    protected float skillCoolTimer;
+    private void Awake()
+    {
+        skillCoolTimer = skillCool;
+    }
     void Update()
     {
-
         Move();
         Dead();
 
+        skillCoolTimer -= Time.deltaTime;
+        Skill();
     }
+    public abstract void Skill();
 
+    public IEnumerator SkillAct()
+    {
+        skillArea.GetComponent<SpriteRenderer>().color = Color.white;
+        skillArea.GetComponent<Collider2D>().enabled = true;
+        skillArea.GetComponent<Collider2D>().isTrigger = true;
+
+        yield return null;
+        skillArea.GetComponent<Collider2D>().isTrigger = false;
+        skillArea.GetComponent<Collider2D>().enabled = false;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bullet"))
@@ -36,7 +54,7 @@ public class Boss : MonoBehaviour
             GameManager.instance.MakeSound();
         }
 
-        
+
 
         if (collision.gameObject.CompareTag("Player"))
         {
@@ -60,7 +78,7 @@ public class Boss : MonoBehaviour
             }
         }
     }
-    
+
     void Move()
     {
         if (transform.position.y > 10)
@@ -85,7 +103,7 @@ public class Boss : MonoBehaviour
                 gameObject.SetActive(false);
             }
 
-            SoundManager.instance.SFXPlay("BossDie", bossDieSound, 1.0f);
+            SoundManager.instance.UISounds(SoundManager.UISound.die);
 
             // 경험치볼 생성.
             GameObject expObj = GameManager.instance.ballPool.GetPool(1);
@@ -95,4 +113,6 @@ public class Boss : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+
 }

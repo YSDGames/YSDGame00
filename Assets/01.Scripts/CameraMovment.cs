@@ -10,8 +10,8 @@ public class CameraMovment : MonoBehaviour
 
     float mapX;
     float mapY;
-    public float hight;
-    public float width;
+    [HideInInspector] public float hight;
+    [HideInInspector] public float width;
     float difX;
     float difY;
 
@@ -46,9 +46,9 @@ public class CameraMovment : MonoBehaviour
         difY = transform.position.y - player.transform.position.y;
 
         // 왼쪽
-        if (difX > width / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(player.transform.position.x - width / 3, transform.position.y, transform.position.z), Time.deltaTime);
+        if (difX > width / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(player.transform.position.x - width / 3, transform.position.y, transform.position.z), Time.deltaTime*1.5f);
         // 오른쪽
-        if (difX < -width / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(player.transform.position.x + width / 3, transform.position.y, transform.position.z), Time.deltaTime);
+        if (difX < -width / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(player.transform.position.x + width / 3, transform.position.y, transform.position.z), Time.deltaTime*1.5f);
         // 아래방향
         if (difY > hight * 2 / 3) transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, player.transform.position.y + hight*2 / 3, transform.position.z), Time.deltaTime*3);
         // 위방향

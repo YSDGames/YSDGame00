@@ -52,6 +52,17 @@ public abstract class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.CompareTag("Skill2"))
+        {
+            isLive = false;
+            coll.enabled = false;
+            rig.simulated = false;
+            aniControl.SetBool("Live", false);
+            spriter.sortingOrder = -1;
+
+            SoundManager.instance.SFXPlay("EnemyDie", enemyDieSound, 2f);
+        }
+
         if (collision.CompareTag("Bullet"))
         {
             bullets bullet = collision.gameObject.GetComponent<bullets>();
@@ -75,6 +86,7 @@ public abstract class Enemy : MonoBehaviour
             }
             else
             {
+                //넉백
                 Vector3 dir = GameManager.instance.player.transform.position - transform.position;
                 transform.position -= dir.normalized * 0.1f;
             }
@@ -145,17 +157,19 @@ public abstract class Enemy : MonoBehaviour
         if (transform.position.y < -6)
         {
             transform.position = new Vector3(-transform.position.x, 15f, transform.position.z);
+            LookPlayer();
             moveTrigger = true;
         }
 
         if (Mathf.Abs(transform.position.x) > 25)
         {
             transform.position = new Vector3(0f, 15f, transform.position.z);
+            LookPlayer();
             moveTrigger = true;
         }
     }
 
-    public void SpeedControl() 
+    public void SpeedControl()
     {
 
         //카메라 밖에 있을때 빠르게 움직이게
@@ -171,6 +185,4 @@ public abstract class Enemy : MonoBehaviour
             speed = mainSpeed;
         }
     }
-
-
 }

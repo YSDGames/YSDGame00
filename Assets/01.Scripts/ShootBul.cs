@@ -9,19 +9,26 @@ public class ShootBul : MonoBehaviour
     public static ShootBul Instance = null;
 
     [SerializeField] public AudioClip soundShoot;
+    public GameObject skill2Right;
+    public GameObject skill2Left;
     public Image skillCoolDown;
+    public Image skill2Active;
+    [SerializeField] Text txtCoolTime;
+    [SerializeField] Text txtSkill2Num;
 
-    public float addDamege;
-    public int addPiercingNum;
+
+    [HideInInspector] public float addDamege;
+    [HideInInspector] public int addPiercingNum;
     public float baseShootSpeed;
-    public float shootSpeed;
+    [HideInInspector] public float shootSpeed;
     float timer;
 
-    [SerializeField] Text txtCoolTime;
-    public float skillTimer;
-    public float skillCoolTime;
-    public int numBullets;
-    public int bulltype;
+    [HideInInspector] public float skillTimer;
+    [HideInInspector] public float skillCoolTime;
+    [HideInInspector] public int skill2Num;
+
+    [HideInInspector] public int numBullets;
+    [HideInInspector] public int bulltype;
 
     private void Awake()
     {
@@ -35,6 +42,8 @@ public class ShootBul : MonoBehaviour
         timer = 0;
         skillCoolTime = 20;
         skillTimer = 0;
+
+        skill2Num = 3;
     }
 
 
@@ -43,7 +52,11 @@ public class ShootBul : MonoBehaviour
         if (GameManager.instance.gameState != GameManager.GameState.ing)
             return;
 
-        SkillCoolTime();
+        Skill1CoolTime();
+
+        Skill2Count();
+
+        ActiveSkill2();
 
         timer += Time.deltaTime;
         //SetShooting();
@@ -64,7 +77,7 @@ public class ShootBul : MonoBehaviour
             timer = 0;
         }
     }
-    public void SkillCoolTime()
+    public void Skill1CoolTime()
     {
         if (skillTimer <= 0) txtCoolTime.text = "";
         else if (skillTimer < 1) txtCoolTime.text = $"{skillTimer:N1}";
@@ -75,7 +88,7 @@ public class ShootBul : MonoBehaviour
 
         skillCoolDown.fillAmount = skillTimer / skillCoolTime;
     }
-    public void ActiveSkill()
+    public void OnActiveSkill1()
     {
         if (skillTimer <= 0)
         {
@@ -95,6 +108,71 @@ public class ShootBul : MonoBehaviour
             skillTimer = skillCoolTime;
         }
     }
+
+    void Skill2Count()
+    {
+        if (skill2Num == 0) skill2Active.gameObject.SetActive(true);
+        else if (skill2Num > 0) skill2Active.gameObject.SetActive(false);
+        txtSkill2Num.text = $"{skill2Num}";
+    }
+    public void OnSkill2Click()
+    {
+        if (!skill2Right.activeSelf && !skill2Left.activeSelf)
+        {
+            skill2Right.SetActive(true);
+            skill2Left.SetActive(true);
+
+            skill2Num--;
+        }
+    }
+    void ActiveSkill2()
+    {
+        if (skill2Right.activeSelf || skill2Left.activeSelf)
+        {
+            // 스킬의 움직임
+            if (skill2Right.transform.localScale.y < 10 && skill2Right.activeSelf)
+            {
+                skill2Right.transform.localScale += 2 * Vector3.up * Time.deltaTime * 8;
+                skill2Right.transform.localPosition += Vector3.up * Time.deltaTime * 8;
+            }
+            else if (skill2Right.transform.localScale.y >= 10 && skill2Right.activeSelf)
+            {
+                skill2Right.transform.SetParent(null);
+                skill2Right.transform.position += Vector3.right * Time.deltaTime * 8;
+            }
+
+            if (skill2Left.transform.localScale.y < 10 && skill2Left.activeSelf)
+            {
+                skill2Left.transform.localScale += 2 * Vector3.up * Time.deltaTime * 8;
+                skill2Left.transform.localPosition += Vector3.up * Time.deltaTime * 8;
+            }
+            else if (skill2Left.transform.localScale.y >= 10 && skill2Left.activeSelf)
+            {
+                skill2Left.transform.SetParent(null);
+                skill2Left.transform.position += Vector3.left * Time.deltaTime * 8;
+            }
+
+            //스킬 초기화
+            if ((skill2Right.transform.position.x - Camera.main.transform.position.x) - CameraMovment.instance.width > 2 && skill2Right.activeSelf)
+            {
+                skill2Right.transform.SetParent(GameObject.Find("Player/Skill2").transform);
+
+                skill2Right.transform.localPosition = Vector3.right * 0.0125f;
+                skill2Right.transform.localScale = new Vector3(0.025f, 0.025f, 0);
+                skill2Right.SetActive(false);
+            }
+
+            if ((skill2Left.transform.position.x - Camera.main.transform.position.x) + CameraMovment.instance.width < -2 && skill2Left.activeSelf)
+            {
+                skill2Left.transform.SetParent(GameObject.Find("Player/Skill2").transform);
+
+                skill2Left.transform.localPosition = Vector3.left * 0.0125f;
+                skill2Left.transform.localScale = new Vector3(0.025f, 0.025f, 0);
+                skill2Left.SetActive(false);
+            }
+        }
+    }
+
     void UpdateStat(GameObject b)
     {
         bullets bullet = b.GetComponent<bullets>();

@@ -48,13 +48,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64703bf84aefd474f83a88273d76bba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 60
+  maxHp: 40
   hp: 0
   enemyDieSound: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
   player: {fileID: 0}
   damage: 5
   speed: 1.2
-  exp: 5
+  exp: 6
+  moveTrigger: 0
 --- !u!212 &2490932689047824530
 SpriteRenderer:
   m_ObjectHideFlags: 0

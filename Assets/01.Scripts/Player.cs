@@ -1,6 +1,6 @@
 
+using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 
 public class Player : MonoBehaviour
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
         instance = this;
 
         nowHp = maxHp;
-        Ball.magRange = 1f;
+        Ball.magRange = 0.75f;
 
     }
 
@@ -39,19 +39,26 @@ public class Player : MonoBehaviour
             return;
 
         HpUpdate();
-        KeyBoardMove();
         Dead();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Skill"))
+        {
+            nowHp = 0;
+        }
     }
 
     private void FixedUpdate()
     {
         if (GameManager.instance.gameState != GameManager.GameState.ing)
             return;
-        if (PlayerPrefs.GetInt("ControlMode") == 1) TouchMove();
-        else if (PlayerPrefs.GetInt("ControlMode") == 0) InputMove();
+
+        // =============================이동관련================================
+        //TouchMove();
 
         KeyBoardMove();
-
         MoveLimit();
     }
 
@@ -71,11 +78,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    void InputMove()
-    {
-        transform.Translate(inputVec * Time.deltaTime * _speed);
-    }
-    
+    //void InputMove()
+    //{
+    //    transform.Translate(inputVec * Time.deltaTime * _speed);
+    //}
+
     void TouchMove()
     {
         if (Input.touchCount > 0)
@@ -84,19 +91,33 @@ public class Player : MonoBehaviour
 
             switch (touch.phase)
             {
-                case UnityEngine.TouchPhase.Began:
+                case TouchPhase.Began:
                     startTouch = touch.position;
-                    GameManager.instance.moveGuide.transform.position = Camera.main.ScreenToWorldPoint(startTouch) + Vector3.forward * 20;
-                    break;
-                case UnityEngine.TouchPhase.Moved:
-                    dragTouch = touch.position;
 
-                    inputVec = dragTouch - startTouch;
-                    //transform.Translate(inputVec * Time.deltaTime * _speed);
-                    transform.Translate(inputVec.normalized * Mathf.Clamp(inputVec.magnitude / 1000, -0.3f, 0.3f) * Time.deltaTime * 4f * _speed);
+                    if (PlayerPrefs.GetInt("ControlMode") == 1)
+                        GameManager.instance.moveGuide.transform.position = Camera.main.ScreenToWorldPoint(startTouch) + Vector3.forward * 20;
+                    else if (PlayerPrefs.GetInt("ControlMode") == 0)
+                        GameManager.instance.joyBG.transform.position = Camera.main.ScreenToWorldPoint(startTouch) + Vector3.forward * 20;
+
                     break;
-                case UnityEngine.TouchPhase.Canceled:
-                    GameManager.instance.moveGuide.transform.position = new Vector3(100, 100, 0); //안보이는곳으로 보내버려
+                case TouchPhase.Moved:
+                    dragTouch = touch.position;
+                    inputVec = dragTouch - startTouch;
+
+                    if (PlayerPrefs.GetInt("ControlMode") == 0)
+                        GameManager.instance.joyStick.transform.localPosition = inputVec.normalized * Mathf.Clamp(inputVec.magnitude, 0, 80);
+
+                    // 0.08f => 패드 위치에따라 바꿔주면댐 지금은 80  이속최대값바뀌는거^^
+                    transform.Translate(inputVec.normalized * Mathf.Clamp(inputVec.magnitude / 1000, 0, 0.08f) * Time.deltaTime * _speed);
+                    break;
+                case TouchPhase.Ended:
+                    if (PlayerPrefs.GetInt("ControlMode") == 0)
+                    {
+                        GameManager.instance.joyStick.transform.localPosition = new Vector3(-5, 8, 0);
+                        GameManager.instance.joyBG.transform.localPosition = new Vector3(0, -780, 20);
+                    }
+                    else if (PlayerPrefs.GetInt("ControlMode") == 1)
+                        GameManager.instance.moveGuide.transform.position = new Vector3(100, 100, 0);
                     break;
 
             }
@@ -109,7 +130,7 @@ public class Player : MonoBehaviour
         float y = Input.GetAxisRaw("Vertical");
 
         inputVec = new Vector2(x, y);
-        transform.Translate(inputVec.normalized * Time.deltaTime * _speed);
+        transform.Translate(inputVec.normalized * Time.deltaTime * _speed/10);
     }
 
     void MoveLimit()
@@ -120,29 +141,34 @@ public class Player : MonoBehaviour
         if (transform.position.x < -mapMaxX + 0.5f) transform.position = new Vector3(-mapMaxX + 0.5f, transform.position.y, 0f);
     }
 
-    void OnNewaction(InputValue value)
-    {
-        inputVec = value.Get<Vector2>();
-    }
     // =======================마우스drag TEST용========================   
-
-
     //private void OnMouseDown()
     //{
     //    startTouch = Input.mousePosition;
-    //    Debug.Log(startTouch);
-    //    GameManager.instance.moveGuide.transform.position = Camera.main.ScreenToWorldPoint(startTouch) + Vector3.forward * 20;
-    //    Debug.Log(GameManager.instance.moveGuide.transform.position);
 
-
+    //    if (PlayerPrefs.GetInt("ControlMode") == 1)
+    //        GameManager.instance.moveGuide.transform.position = Camera.main.ScreenToWorldPoint(startTouch) + Vector3.forward * 20;
+    //    else if (PlayerPrefs.GetInt("ControlMode") == 0)
+    //        GameManager.instance.joyBG.transform.position = startTouch;
     //}
 
     //private void OnMouseDrag()
     //{
     //    Vector3 vec = new Vector3(Input.mousePosition.x - startTouch.x, Input.mousePosition.y - startTouch.y, 0f);
 
-    //    transform.Translate(vec.normalized * Mathf.Clamp(vec.magnitude / 1000, -0.3f, 0.3f) * Time.deltaTime * 4f * _speed);
-    //    //transform.Translate(vec * Time.deltaTime * 0.005f);
+    //    transform.Translate(vec.normalized * Mathf.Clamp(vec.magnitude / 1000, 0, 0.08f) * Time.deltaTime * _speed);
 
+    //    if (PlayerPrefs.GetInt("ControlMode") == 0)
+    //        GameManager.instance.joyStick.transform.localPosition = vec.normalized * Mathf.Clamp(vec.magnitude, 0, 80);
+    //}
+    //private void OnMouseUp()
+    //{
+    //    if (PlayerPrefs.GetInt("ControlMode") == 0)
+    //    {
+    //        GameManager.instance.joyStick.transform.localPosition = new Vector3(-5, 8, 0);
+    //        GameManager.instance.joyBG.transform.localPosition = new Vector3(0, -780, 20);
+    //    }
+    //    else if (PlayerPrefs.GetInt("ControlMode") == 1)
+    //        GameManager.instance.moveGuide.transform.position = new Vector3(100, 100, 0); //안보이는곳으로 보내버려
     //}
 }
