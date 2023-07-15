@@ -18,6 +18,7 @@ public class bullets : MonoBehaviour
     public bool rotTrigger;
     public float rotTimer;
     public float rotLifeTime;
+    public float rotSpeed;
 
     public float deg;
     public float circleR;
@@ -33,7 +34,7 @@ public class bullets : MonoBehaviour
 
         rotTrigger = false;
         rotLifeTime = 10;
-
+        rotSpeed = 25;
     }
 
     private void Start()
@@ -51,7 +52,7 @@ public class bullets : MonoBehaviour
     {
         
 
-        if (rotTrigger) Rotate(25);
+        if (rotTrigger) Rotate(rotSpeed);
         else Move();
 
         DestroyBullet();

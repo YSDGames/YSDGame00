@@ -102,7 +102,7 @@ public class ShootBul : MonoBehaviour
                     break;
                 case 2:
                 default:
-                    SkillRotate(40, 0.05f);  // * 3 *40 ¹è  20,0.1  40,0.05
+                    SkillRotate(10, 0.05f);  // * 3 *40 ¹è  20,0.1  40,0.05
                     break;
             }
             skillTimer = skillCoolTime;
@@ -225,15 +225,17 @@ public class ShootBul : MonoBehaviour
         {
             GameObject b = GameManager.instance.bulletPool.GetPool(bulltype, transform.position, Quaternion.Euler(0, 0, 90));
             UpdateStat(b);
+            b.GetComponent<bullets>().circleR = 1 + 0.2f * i;
+            //b.GetComponent<bullets>().rotSpeed = 25 + 0.05f * i;
             b.gameObject.GetComponent<bullets>().rotTrigger = true;
 
 
             SoundManager.instance.SFXPlay("Shoot", soundShoot, 0.3f);
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.3f); //Ã·°ª 0.3
         }
     }
 
-    IEnumerator DelayShoot(float numBullets, int bulltype, float bullSpeed, float shootSpeed, float r)
+    IEnumerator DelayShoot(float numBullets, int bulltype, float bullSpeed, float shootSpeed, float r, float startDeg)
     {
         for (int i = 0; i < numBullets; i++)
         {
@@ -242,7 +244,7 @@ public class ShootBul : MonoBehaviour
             b.GetComponent<bullets>().bulletSpeed = bullSpeed;
             b.GetComponent<bullets>().circleR = r;
             b.gameObject.GetComponent<bullets>().rotTrigger = true;
-
+            b.GetComponent<bullets>().deg = startDeg;
 
             SoundManager.instance.SFXPlay("Shoot", soundShoot, 0.2f);
             yield return new WaitForSeconds(shootSpeed);
@@ -272,9 +274,13 @@ public class ShootBul : MonoBehaviour
 
     void SkillRotate(int Num, float shootSpeed)
     {
-        StartCoroutine(DelayShoot(Num, bulltype, 7, shootSpeed, 2));
-        StartCoroutine(DelayShoot(Num, bulltype, 7, shootSpeed, 3));
-        StartCoroutine(DelayShoot(Num, bulltype, 7, shootSpeed, 4));
+        for (int i = 0; i < 4; i++)
+        {
+            StartCoroutine(DelayShoot(Num, bulltype, 7, shootSpeed, 2, 0 + 90 * i));
+            StartCoroutine(DelayShoot(Num, bulltype, 7, shootSpeed, 3, 0 + 90 * i));
+            StartCoroutine(DelayShoot(Num, bulltype, 7, shootSpeed, 4, 0 + 90 * i));
+        }
+
     }
 
     //void SetShooting()
