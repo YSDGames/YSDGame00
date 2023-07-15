@@ -26,8 +26,7 @@ public class ExpBall : Ball
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            SoundManager.instance.SFXPlay("Ball", eatEXPSound, 0.5f);
-
+            SoundManager.instance.UISounds(SoundManager.UISound.expBall);
             gameObject.SetActive(false);
             GameManager.instance.exp += exp;
         }

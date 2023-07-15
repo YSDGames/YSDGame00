@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2490932689047824535}
   - component: {fileID: 2490932689047824528}
   - component: {fileID: -7166112578849750732}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy03
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -50,7 +50,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 40
   hp: 0
-  enemyDieSound: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
   player: {fileID: 0}
   damage: 5
   speed: 1.2

@@ -4,7 +4,6 @@ public abstract class Enemy : MonoBehaviour
 {
     public float maxHp;
     [HideInInspector] public float hp;
-    public AudioClip enemyDieSound;
     public Player player;
 
     Animator aniControl;
@@ -60,7 +59,7 @@ public abstract class Enemy : MonoBehaviour
             aniControl.SetBool("Live", false);
             spriter.sortingOrder = -1;
 
-            SoundManager.instance.SFXPlay("EnemyDie", enemyDieSound, 2f);
+            SoundManager.instance.UISounds(SoundManager.UISound.enemyDie, 2);
         }
 
         if (collision.CompareTag("Bullet"))
@@ -82,7 +81,7 @@ public abstract class Enemy : MonoBehaviour
                 aniControl.SetBool("Live", false);
                 spriter.sortingOrder = -1;
 
-                SoundManager.instance.SFXPlay("EnemyDie", enemyDieSound, 2f);
+                SoundManager.instance.UISounds(SoundManager.UISound.enemyDie, 2);
             }
             else
             {

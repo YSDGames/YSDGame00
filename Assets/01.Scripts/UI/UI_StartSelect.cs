@@ -42,6 +42,17 @@ public class UI_StartSelect : MonoBehaviour
 
     }
 
+    public void Guide()
+    {
+        SoundManager.instance.UISounds(SoundManager.UISound.itemSelect);
+
+
+        GameManager.instance.shootType = 3;
+
+        selectOrb.gameObject.SetActive(true);
+        gameObject.SetActive(false);
+    }
+
     public void SelectOrb() 
     {
         SoundManager.instance.UISounds(SoundManager.UISound.itemSelect);

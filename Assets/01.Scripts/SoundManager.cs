@@ -19,7 +19,9 @@ public class SoundManager : MonoBehaviour
         levelUp,
         die,
         hitted,
-        healSound
+        heal,
+        enemyDie,
+        expBall
     }
 
 
@@ -71,5 +73,10 @@ public class SoundManager : MonoBehaviour
     public void UISounds(UISound sound)
     {
         SFXPlay(sound.ToString(), Clip[(int)sound], 0.5f);
+    }
+
+    public void UISounds(UISound sound, float volum)
+    {
+        SFXPlay(sound.ToString(), Clip[(int)sound], volum);
     }
 }

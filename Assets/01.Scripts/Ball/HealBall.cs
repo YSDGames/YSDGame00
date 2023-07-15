@@ -16,8 +16,7 @@ public class HealBall : Ball
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            SoundManager.instance.SFXPlay("Ball", eatEXPSound, 0.5f);
-
+            SoundManager.instance.UISounds(SoundManager.UISound.heal);
             gameObject.SetActive(false);
             Player.instance.nowHp += heal;
         }

@@ -13,6 +13,7 @@ public class ShootBul : MonoBehaviour
     public GameObject skill2Left;
     public Image skillCoolDown;
     public Image skill2Active;
+    bool guideSkillTigger;
     [SerializeField] Text txtCoolTime;
     [SerializeField] Text txtSkill2Num;
 
@@ -30,6 +31,8 @@ public class ShootBul : MonoBehaviour
     [HideInInspector] public int numBullets;
     [HideInInspector] public int bulltype;
 
+    Scanner scanner;
+
     private void Awake()
     {
         Instance = this;
@@ -44,6 +47,8 @@ public class ShootBul : MonoBehaviour
         skillTimer = 0;
 
         skill2Num = 3;
+        guideSkillTigger = false;
+        scanner = GetComponentInParent<Scanner>();
     }
 
 
@@ -73,6 +78,10 @@ public class ShootBul : MonoBehaviour
                 case 2:
                     ShootRotate(numBullets, bulltype);
                     break;
+                case 3:
+                    ShootGuide(numBullets, bulltype);
+                    break;
+
             }
             timer = 0;
         }
@@ -101,8 +110,11 @@ public class ShootBul : MonoBehaviour
                     StartCoroutine(SkillSpread(30, 0.05f)); // * bullNum * 30น่
                     break;
                 case 2:
-                default:
                     SkillRotate(10, 0.05f);  // * 3 *40 น่  20,0.1  40,0.05
+                    break;
+                case 3:
+                default:
+                    StartCoroutine(SkillGuide());
                     break;
             }
             skillTimer = skillCoolTime;
@@ -182,6 +194,7 @@ public class ShootBul : MonoBehaviour
         bullet.deg = 0;
         bullet.bulletSpeed = 6f;
         bullet.circleR = 1f;
+        bullet.transform.localScale = new Vector3(bullet.baseScale, bullet.baseScale, 1);
 
         bullet.totalDamage = bullet.damage + addDamege;
         bullet.totalPiercingNum = bullet.piercingNum + addPiercingNum;
@@ -213,13 +226,71 @@ public class ShootBul : MonoBehaviour
         }
 
     }
+    //===========================================GuideShoot===============================================
+    void ShootGuide(float numBullets, int bulltype)
+    {
+        StartCoroutine(GuideDelayShoot(numBullets, bulltype));
+    }
+    IEnumerator GuideDelayShoot(float numBullets, int bulltype)
+    {
+        for (int i = 0; i < numBullets; i++)
+        {
+            if (scanner.nearestTargets[i] != null)
+            {
+                GameObject b = GameManager.instance.bulletPool.GetPool(bulltype);
+                b.transform.position = transform.position;
+                b.transform.rotation = LookEnemy(scanner.nearestTargets[i].transform);
+                b.transform.Rotate(new Vector3(0, 0, 90));
+                UpdateStat(b);
+
+                if (guideSkillTigger)
+                {
+                    b.GetComponent<bullets>().totalDamage *= 3;
+                    b.GetComponent<bullets>().totalPiercingNum += 3;
+                    b.transform.localScale *= 5; 
+                }
+
+                SoundManager.instance.SFXPlay("Shoot", soundShoot, 0.3f);
+                yield return new WaitForSeconds(0.05f);
+            }
+            else
+            {
+                GameObject b = GameManager.instance.bulletPool.GetPool(bulltype);
+                b.transform.position = transform.position;
+                b.transform.rotation = Quaternion.Euler(0, 0, 90);
+                UpdateStat(b);
+
+                if (guideSkillTigger)
+                {
+                    b.GetComponent<bullets>().totalDamage *= 3;
+                    b.GetComponent<bullets>().totalPiercingNum += 3;
+                    b.transform.localScale *= 5;
+                }
+
+                SoundManager.instance.SFXPlay("Shoot", soundShoot, 0.3f);
+                yield return new WaitForSeconds(0.05f);
+            }
+        }
+    }
+    public Quaternion LookEnemy(Transform enemy)
+    {
+        Vector2 direction = new Vector2();
+
+        direction = (enemy.position - transform.position).normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion q = Quaternion.AngleAxis(angle + 270, Vector3.forward);
+
+        return q;
+    }
+    //===========================================RotateShoot==========================================================================
 
     void ShootRotate(float numBullets, int bulltype)
     {
-        StartCoroutine(DelayShoot(numBullets, bulltype));
+        StartCoroutine(RotateDelayShoot(numBullets, bulltype));
     }
 
-    IEnumerator DelayShoot(float numBullets, int bulltype)
+    IEnumerator RotateDelayShoot(float numBullets, int bulltype)
     {
         for (int i = 0; i < numBullets; i++)
         {
@@ -235,7 +306,7 @@ public class ShootBul : MonoBehaviour
         }
     }
 
-    IEnumerator DelayShoot(float numBullets, int bulltype, float bullSpeed, float shootSpeed, float r, float startDeg)
+    IEnumerator RotateDelayShoot(float numBullets, int bulltype, float bullSpeed, float shootSpeed, float r, float startDeg)
     {
         for (int i = 0; i < numBullets; i++)
         {
@@ -250,7 +321,7 @@ public class ShootBul : MonoBehaviour
             yield return new WaitForSeconds(shootSpeed);
         }
     }
-
+    //==================================================================================================================================================
     void SkillStright(float damMulti, float scale)
     {
         GameObject b = Instantiate(GameManager.instance.bulletPool.pool[bulltype], transform.position, Quaternion.identity);
@@ -276,11 +347,18 @@ public class ShootBul : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            StartCoroutine(DelayShoot(Num, bulltype, 7, shootSpeed, 2, 0 + 90 * i));
-            StartCoroutine(DelayShoot(Num, bulltype, 7, shootSpeed, 3, 0 + 90 * i));
-            StartCoroutine(DelayShoot(Num, bulltype, 7, shootSpeed, 4, 0 + 90 * i));
+            StartCoroutine(RotateDelayShoot(Num, bulltype, 7, shootSpeed, 2, 0 + 90 * i));
+            StartCoroutine(RotateDelayShoot(Num, bulltype, 7, shootSpeed, 3, 0 + 90 * i));
+            StartCoroutine(RotateDelayShoot(Num, bulltype, 7, shootSpeed, 4, 0 + 90 * i));
         }
 
+    }
+
+    IEnumerator SkillGuide()
+    {
+        guideSkillTigger = true;
+        yield return new WaitForSeconds(5);
+        guideSkillTigger = false;
     }
 
     //void SetShooting()

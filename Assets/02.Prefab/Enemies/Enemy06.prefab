@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -4763138860861488021}
   - component: {fileID: -7973097932191773487}
   - component: {fileID: -3569343434851858047}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy06
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -48,13 +48,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb202ed67343524585b05375f3efb12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 30
+  maxHp: 40
   hp: 0
-  enemyDieSound: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
   player: {fileID: 0}
   damage: 3
   speed: 3
   exp: 3
+  moveTrigger: 0
 --- !u!212 &4669270958199210187
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public AudioClip eatEXPSound;
     public float speed = 0.7f;
     [HideInInspector] public float size;
     [HideInInspector] public static float magRange = 0.5f;

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class bullets : MonoBehaviour
 {
-    public float bulletSpeed = 3f;
-
+    public float bulletSpeed;
+    public float baseScale; 
 
     public GameObject hitEffect;
     //[SerializeField] float shootSpeed = 0.2f;
@@ -25,6 +25,7 @@ public class bullets : MonoBehaviour
     Transform[] childTrans;
     private void Awake()
     {
+        bulletSpeed = 6;
         circleR = 1;
         deg = 0;
         //ShootBul.Instance.shootSpeed = shootSpeed;
@@ -35,6 +36,8 @@ public class bullets : MonoBehaviour
         rotTrigger = false;
         rotLifeTime = 10;
         rotSpeed = 25;
+
+        baseScale = transform.localScale.x;
     }
 
     private void Start()

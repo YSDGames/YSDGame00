@@ -79,14 +79,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 6
+  baseScale: 0
   hitEffect: {fileID: 0}
-  damage: 7
+  damage: 6
   totalDamage: 0
   piercingNum: 1
   totalPiercingNum: 0
   rotTrigger: 0
   rotTimer: 0
   rotLifeTime: 0
+  rotSpeed: 0
   deg: 0
   circleR: 0
 --- !u!212 &332227929828652748
