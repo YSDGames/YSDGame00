@@ -1,5 +1,3 @@
-
-using UnityEditor.UIElements;
 using UnityEngine;
 
 
@@ -42,14 +40,7 @@ public class Player : MonoBehaviour
         Dead();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Skill"))
-        {
-            nowHp = 0;
-        }
-    }
-
+    
     private void FixedUpdate()
     {
         if (GameManager.instance.gameState != GameManager.GameState.ing)
@@ -60,6 +51,14 @@ public class Player : MonoBehaviour
 
         KeyBoardMove();
         MoveLimit();
+    }
+
+private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Skill"))
+        {
+            nowHp = 0;
+        }
     }
 
     void HpUpdate()
