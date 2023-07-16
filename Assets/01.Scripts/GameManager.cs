@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -188,8 +189,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         gameState = GameState.stay;
         clearUI.SetActive(true);
+        StartCoroutine(GoMenu());
     }
-
+    IEnumerator GoMenu()
+    {
+        yield return new WaitForSecondsRealtime(3);
+        SceneManager.LoadScene("MainMenu");
+    }
     public void GameStart()
     {
         gameStart.SetActive(true);

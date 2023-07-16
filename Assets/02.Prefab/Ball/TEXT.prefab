@@ -47,11 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32bf51dae1b77484298ea77570191595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eatEXPSound: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
   speed: 0.7
   size: 0.1
-  magRange: 1
-  exp: 1000
+  exp: 10000
 --- !u!212 &1510229497047451887
 SpriteRenderer:
   m_ObjectHideFlags: 0

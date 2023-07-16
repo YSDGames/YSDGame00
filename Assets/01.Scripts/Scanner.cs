@@ -33,7 +33,7 @@ public class Scanner : MonoBehaviour
     }
 
 
-
+    // 부채꼴모양으로 제한해준다 적찾는영역!
     void LimitAngleRange(float angleRange)
     {
         //i를 0부터시작하면 배열에서 인덱스를 뺴는과정에서 스킵되는부분이 생긴다!
@@ -42,6 +42,7 @@ public class Scanner : MonoBehaviour
             // 적과 player와의각도계산. 2d니까! player z값기준으로 각도정해야해서 z를 플레이어z값으로함.
             Vector3 interV = new Vector3(targets[i].transform.position.x - transform.position.x, targets[i].transform.position.y - transform.position.y, transform.position.z);
 
+            //내적해서 코사인값을 찾아주고 아크코싸인해줘서 라디안값구해줌., Rad2Deg를 통해 라디안값을 도값으로
             float dot = Vector3.Dot(interV.normalized, transform.up); //transform.up으로 2d니까! 조심하셈
             float theta = Mathf.Acos(dot);
             float degree = Mathf.Rad2Deg * theta;
@@ -75,7 +76,10 @@ public class Scanner : MonoBehaviour
         //젤가까운거를 targets배열에서 빼준다. 이후 두번째 세번째.. 가까운적을 찾기위해서 , 한마리밖에남지않으면 그적으로 다 채움!
         if (targets.Length > 1)
             targets = targets.Where((source, num) => num != resultNum).ToArray();
-
+        else if(targets.Length ==1 && nearestTargets[0] != null)
+        {
+            result = nearestTargets[0];
+        }
         return result;
     }
 
