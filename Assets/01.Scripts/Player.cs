@@ -110,18 +110,17 @@ public class Player : MonoBehaviour
                     // 0.08f => 패드 위치에따라 바꿔주면댐 지금은 80  이속최대값바뀌는거^^
                     transform.Translate(inputVec.normalized * Mathf.Clamp(inputVec.magnitude / 1000, 0, 0.08f) * Time.deltaTime * _speed);
                     break;
-                case TouchPhase.Ended:
-                    if (PlayerPrefs.GetInt("ControlMode") == 0)
-                    {
-                        GameManager.instance.joyStick.transform.localPosition = new Vector3(-5, 8, 0);
-                        GameManager.instance.joyBG.transform.localPosition = new Vector3(0, -780, 20);
-                    }
-                    else if (PlayerPrefs.GetInt("ControlMode") == 1)
-                        GameManager.instance.moveGuide.transform.position = new Vector3(100, 100, 0);
-                    break;
-
             }
-
+        }
+        else if (Input.touchCount == 0)
+        {
+            if (PlayerPrefs.GetInt("ControlMode") == 0)
+            {
+                GameManager.instance.joyStick.transform.localPosition = new Vector3(-5, 8, 0);
+                GameManager.instance.joyBG.transform.localPosition = new Vector3(0, -780, 20);
+            }
+            else if (PlayerPrefs.GetInt("ControlMode") == 1)
+                GameManager.instance.moveGuide.transform.position = new Vector3(100, 100, 0);
         }
     }
     void KeyBoardMove()
@@ -142,33 +141,33 @@ public class Player : MonoBehaviour
     }
 
     // =======================마우스drag TEST용========================   
-    private void OnMouseDown()
-    {
-        startTouch = Input.mousePosition;
+    //private void OnMouseDown()
+    //{
+    //    startTouch = Input.mousePosition;
 
-        if (PlayerPrefs.GetInt("ControlMode") == 1)
-            GameManager.instance.moveGuide.transform.position = Camera.main.ScreenToWorldPoint(startTouch) + Vector3.forward * 20;
-        else if (PlayerPrefs.GetInt("ControlMode") == 0)
-            GameManager.instance.joyBG.transform.position = startTouch;
-    }
+    //    if (PlayerPrefs.GetInt("ControlMode") == 1)
+    //        GameManager.instance.moveGuide.transform.position = Camera.main.ScreenToWorldPoint(startTouch) + Vector3.forward * 20;
+    //    else if (PlayerPrefs.GetInt("ControlMode") == 0)
+    //        GameManager.instance.joyBG.transform.position = startTouch;
+    //}
 
-    private void OnMouseDrag()
-    {
-        Vector3 vec = new Vector3(Input.mousePosition.x - startTouch.x, Input.mousePosition.y - startTouch.y, 0f);
+    //private void OnMouseDrag()
+    //{
+    //    Vector3 vec = new Vector3(Input.mousePosition.x - startTouch.x, Input.mousePosition.y - startTouch.y, 0f);
 
-        transform.Translate(vec.normalized * Mathf.Clamp(vec.magnitude / 1000, 0, 0.08f) * Time.deltaTime * _speed);
+    //    transform.Translate(vec.normalized * Mathf.Clamp(vec.magnitude / 1000, 0, 0.08f) * Time.deltaTime * _speed);
 
-        if (PlayerPrefs.GetInt("ControlMode") == 0)
-            GameManager.instance.joyStick.transform.localPosition = vec.normalized * Mathf.Clamp(vec.magnitude, 0, 80);
-    }
-    private void OnMouseUp()
-    {
-        if (PlayerPrefs.GetInt("ControlMode") == 0)
-        {
-            GameManager.instance.joyStick.transform.localPosition = new Vector3(-5, 8, 0);
-            GameManager.instance.joyBG.transform.localPosition = new Vector3(0, -780, 20);
-        }
-        else if (PlayerPrefs.GetInt("ControlMode") == 1)
-            GameManager.instance.moveGuide.transform.position = new Vector3(100, 100, 0); //안보이는곳으로 보내버려
-    }
+    //    if (PlayerPrefs.GetInt("ControlMode") == 0)
+    //        GameManager.instance.joyStick.transform.localPosition = vec.normalized * Mathf.Clamp(vec.magnitude, 0, 80);
+    //}
+    //private void OnMouseUp()
+    //{
+    //    if (PlayerPrefs.GetInt("ControlMode") == 0)
+    //    {
+    //        GameManager.instance.joyStick.transform.localPosition = new Vector3(-5, 8, 0);
+    //        GameManager.instance.joyBG.transform.localPosition = new Vector3(0, -780, 20);
+    //    }
+    //    else if (PlayerPrefs.GetInt("ControlMode") == 1)
+    //        GameManager.instance.moveGuide.transform.position = new Vector3(100, 100, 0); //안보이는곳으로 보내버려
+    //}
 }
